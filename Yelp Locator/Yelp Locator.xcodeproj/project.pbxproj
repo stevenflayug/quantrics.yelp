@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5B03889D61B26DC87C36C16 /* Pods_Yelp_Locator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E5467605D6ED8ECFC7E49B /* Pods_Yelp_Locator.framework */; };
 		F06F81C9261F6D9700E7A392 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F81C8261F6D9700E7A392 /* AppDelegate.swift */; };
 		F06F81CB261F6D9700E7A392 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F81CA261F6D9700E7A392 /* SceneDelegate.swift */; };
 		F06F81CD261F6D9700E7A392 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F81CC261F6D9700E7A392 /* ViewController.swift */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		44E5467605D6ED8ECFC7E49B /* Pods_Yelp_Locator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yelp_Locator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAC82C0D0324336E07C8C8E3 /* Pods-Yelp Locator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelp Locator.release.xcconfig"; path = "Target Support Files/Pods-Yelp Locator/Pods-Yelp Locator.release.xcconfig"; sourceTree = "<group>"; };
 		F06F81C5261F6D9700E7A392 /* Yelp Locator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yelp Locator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F06F81C8261F6D9700E7A392 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F06F81CA261F6D9700E7A392 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -28,6 +31,7 @@
 		F06F81D6261F6D9900E7A392 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F06F81DD261F6E1100E7A392 /* Views */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Views; sourceTree = "<group>"; };
 		F06F81DE261F6E1100E7A392 /* Networking */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Networking; sourceTree = "<group>"; };
+		F9DCB972733E639519E7A942 /* Pods-Yelp Locator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelp Locator.debug.xcconfig"; path = "Target Support Files/Pods-Yelp Locator/Pods-Yelp Locator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +39,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5B03889D61B26DC87C36C16 /* Pods_Yelp_Locator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2890415A39F6681EAC7B7D9D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F9DCB972733E639519E7A942 /* Pods-Yelp Locator.debug.xcconfig */,
+				AAC82C0D0324336E07C8C8E3 /* Pods-Yelp Locator.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		5A0E5E8D441F52CB0BAA4716 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				44E5467605D6ED8ECFC7E49B /* Pods_Yelp_Locator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F06F81BC261F6D9700E7A392 = {
 			isa = PBXGroup;
 			children = (
 				F06F81C7261F6D9700E7A392 /* Yelp Locator */,
 				F06F81C6261F6D9700E7A392 /* Products */,
+				2890415A39F6681EAC7B7D9D /* Pods */,
+				5A0E5E8D441F52CB0BAA4716 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,9 +105,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F06F81D9261F6D9900E7A392 /* Build configuration list for PBXNativeTarget "Yelp Locator" */;
 			buildPhases = (
+				A922312AB5CEBBF5776B9BCD /* [CP] Check Pods Manifest.lock */,
 				F06F81C1261F6D9700E7A392 /* Sources */,
 				F06F81C2261F6D9700E7A392 /* Frameworks */,
 				F06F81C3261F6D9700E7A392 /* Resources */,
+				F36B7FE6EFA990D40C2F1E0C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -139,6 +166,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A922312AB5CEBBF5776B9BCD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Yelp Locator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F36B7FE6EFA990D40C2F1E0C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Yelp Locator/Pods-Yelp Locator-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Yelp Locator/Pods-Yelp Locator-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Yelp Locator/Pods-Yelp Locator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F06F81C1261F6D9700E7A392 /* Sources */ = {
@@ -291,6 +360,7 @@
 		};
 		F06F81DA261F6D9900E7A392 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F9DCB972733E639519E7A942 /* Pods-Yelp Locator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -309,6 +379,7 @@
 		};
 		F06F81DB261F6D9900E7A392 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAC82C0D0324336E07C8C8E3 /* Pods-Yelp Locator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
