@@ -10,7 +10,7 @@ import UIKit
 import Moya
 
 class BusinessRouter {
-    let provider = MoyaProvider<UserRequest>()
+    let provider = MoyaProvider<UserRequest>(plugins: [NetworkLoggerPlugin()])
     
     public func startBusinessListRequest(options: BusinessRequestOptions, completion: @escaping (_ businessList: BusinessData?, _ error: String?) -> Void) {
         provider.request(.businessList(options: options)) { result in
@@ -22,7 +22,8 @@ class BusinessRouter {
                         print(results)
                         completion(results, nil)
                     }
-                } catch {
+                } catch let error {
+                    print(error)
                     completion(nil, "No businesses retrieved")
                     return
                 }

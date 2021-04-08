@@ -17,7 +17,7 @@ class BusinessListViewModel {
 
     func getBusinessList() {
         // TODO: Mock coordinates, should be based on location
-        router.startBusinessListRequest(options: BusinessRequestOptions(longtitude: 121.14007076052972, latitude: 14.567405147003639, distance: nil, rating: nil)) { [weak self] (data, error) in
+        router.startBusinessListRequest(options: BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639, distance: nil, rating: nil)) { [weak self] (data, error) in
             guard let _self = self else { return }
             guard data != nil else {
                 _self.errorMessage.accept(error ?? "")

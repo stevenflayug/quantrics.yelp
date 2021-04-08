@@ -36,7 +36,8 @@ extension UserRequest: TargetType {
  public var task: Task {
     switch self {
     case .businessList(let options):
-        return .requestParameters(parameters: options.bodyParameters, encoding: URLEncoding.default)
+        return .requestParameters(parameters: options.urlParameters,
+                                  encoding: URLEncoding.default)
     }
  }
 

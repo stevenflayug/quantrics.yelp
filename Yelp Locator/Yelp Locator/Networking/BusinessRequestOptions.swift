@@ -8,16 +8,16 @@
 import Foundation
 
 public struct BusinessRequestOptions {
-    var longtitude: Double
+    var longitude: Double
     var latitude: Double
     var distance: String?
     var rating: String?
 }
 
 extension BusinessRequestOptions: RequestParameter {
-    var bodyParameters: [String : Any] {
+    var urlParameters: [String : Any] {
         var parameters = [String : Any]()
-        parameters["longtitude"] = longtitude
+        parameters["longitude"] = longitude
         parameters["latitude"] = latitude
         
         if distance != nil {

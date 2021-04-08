@@ -30,6 +30,25 @@ struct Business: Codable {
     let displayPhone: String
     let distance: Double
     let price: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case alias
+        case name
+        case url
+        case categories
+        case rating
+        case coordinates
+        case transactions
+        case location
+        case phone
+        case distance
+        case price
+        case isClosed = "is_closed"
+        case displayPhone = "display_phone"
+        case imageURL = "image_url"
+        case reviewCount = "review_count"
+    }
 }
 
 struct Category: Codable {
@@ -51,6 +70,17 @@ struct Location: Codable {
     let country: String
     let state: String
     let displayAddress: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case address1
+        case address2
+        case address3
+        case city
+        case country
+        case state
+        case zipCode = "zip_code"
+        case displayAddress = "display_address"
+    }
 }
 
 struct Region: Codable {

@@ -72,6 +72,7 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <accessibility key="accessibilityConfiguration" identifier="BusinessListViewController"/>
             <constraints>
                 <constraint firstItem="XtW-fK-P7Z" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="H5u-DI-qbc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="EYl-cg-Vcd" secondAttribute="bottom" constant="10" id="I0T-z3-OtN"/>
