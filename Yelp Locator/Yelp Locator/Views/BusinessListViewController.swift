@@ -27,6 +27,7 @@ class BusinessListViewController: UIViewController {
         self.setupViews()
         self.setupTableView()
         self.setupObservables()
+        self.bindValues()
         self.setupActions()
     }
 
@@ -39,9 +40,10 @@ class BusinessListViewController: UIViewController {
     }
     
     private func setupTableView() {
+        self.businessListTableview.tableFooterView = UIView()
         self.businessListTableview.estimatedRowHeight = 50.0
         self.businessListTableview.rowHeight = UITableView.automaticDimension
-        self.businessListTableview.sectionHeaderHeight = 0.0
+        self.businessListTableview.sectionHeaderHeight = .leastNonzeroMagnitude
         self.businessListTableview.separatorStyle = .none
         
         self.businessListTableview.delegate = nil
@@ -61,7 +63,7 @@ class BusinessListViewController: UIViewController {
     func setupViews() {
         self.searchByTextField.delegate = self
         self.searchByTextField.borderStyle = .none
-        self.searchByTextField.text = "Search by: Name "
+        self.searchByTextField.text = "Search by: \(self.viewModel.searchCategory.rawValue) "
         self.searchByTextField.font = UIFont(name: "Roboto-Regular", size: 13.0)
         self.searchByTextField.backgroundColor = .clear
         self.searchByTextField.rightViewMode = .always
@@ -71,6 +73,19 @@ class BusinessListViewController: UIViewController {
         
         self.searchByPickerView.delegate = self
         self.searchByPickerView.dataSource = self
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor.systemBlue
+        toolBar.sizeToFit()
+
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(doneTapped))
+        let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+
+        toolBar.setItems([padding, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        self.searchByTextField.inputAccessoryView = toolBar
     }
     
     private func setupActions() {
@@ -87,6 +102,7 @@ class BusinessListViewController: UIViewController {
         
         self.viewModel.businessList.asObservable().subscribe(onNext: { [unowned self] (_) in
             self.businessListTableview.reloadData()
+            self.businessListTableview.reloadInputViews()
         }).disposed(by: disposeBag)
     }
     
@@ -95,6 +111,22 @@ class BusinessListViewController: UIViewController {
 //            userDetailsVC.user.accept(self!.viewModel.userList.value[indexPath.row])
 //            self?.navigationController?.pushViewController(userDetailsVC, animated: true)
 //        }).disposed(by: disposeBag)
+    
+    private func bindValues() {
+        self.viewModel.setupObservables()
+        
+        searchTextField.rx.text
+            .orEmpty
+            .bind(to: self.viewModel.filterValue)
+            .disposed(by: self.disposeBag)
+    }
+    
+    @objc func doneTapped() {
+        if self.searchByPickerView.selectedRow(inComponent: 0) == 0 {
+            self.searchByTextField.text = "Search by: \(SearchType.allCases[0].rawValue) "
+        }
+        self.searchByTextField.resignFirstResponder()
+    }
 }
 
 extension BusinessListViewController: UITextFieldDelegate {
@@ -105,7 +137,7 @@ extension BusinessListViewController: UITextFieldDelegate {
 
 extension BusinessListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return SearchTypes.allCases.count
+        return SearchType.allCases.count
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -113,17 +145,22 @@ extension BusinessListViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return SearchTypes.allCases[row].rawValue
+        return SearchType.allCases[row].rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.searchByTextField.text = "Search by: \(SearchType.allCases[row].rawValue) "
+        self.viewModel.setSearchCategory(category: SearchType.allCases[row])
     }
 }
 
 
 // TODO: Move to viewmodel
 
-public enum SearchTypes: String {
+public enum SearchType: String {
     case name = "Business Name"
     case address = "Business Address"
     case type = "Business Type"
     
-    public static let allCases: [SearchTypes] = [.name, .address, .type]
+    public static let allCases: [SearchType] = [.name, .address, .type]
 }

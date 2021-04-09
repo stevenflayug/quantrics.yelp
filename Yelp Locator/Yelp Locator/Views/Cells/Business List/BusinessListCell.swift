@@ -34,19 +34,8 @@ class BusinessListCell: UITableViewCell {
     }
     
     func setupCell(business: Business) {
-        var completeAddress = ""
-        var completeCategory = ""
-        
-        business.location.displayAddress.forEach {
-            completeAddress += completeAddress == "" ?  "\($0)" : " \($0)"
-        }
-        
-        business.categories.forEach {
-            completeCategory += completeCategory == "" ?  "\($0.title)" : ", \($0.title)"
-        }
-        
         nameLabel.text = business.name
-        addressLabel.text = completeAddress
-        typeLabel.text = completeCategory
+        addressLabel.text = business.completeAddress
+        typeLabel.text = business.completeCategory
     }
 }

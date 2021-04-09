@@ -49,6 +49,22 @@ struct Business: Codable {
         case imageURL = "image_url"
         case reviewCount = "review_count"
     }
+    
+    var completeAddress: String {
+        var completeAddress = ""
+        self.location.displayAddress.forEach {
+            completeAddress += completeAddress == "" ?  "\($0)" : " \($0)"
+        }
+        return completeAddress
+    }
+    
+    var completeCategory: String {
+        var completeCategory = ""
+        self.categories.forEach {
+            completeCategory += completeCategory == "" ?  "\($0.title)" : ", \($0.title)"
+        }
+        return completeCategory
+    }
 }
 
 struct Category: Codable {
