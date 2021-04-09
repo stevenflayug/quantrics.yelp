@@ -89,6 +89,7 @@
             <connections>
                 <outlet property="actionImageView" destination="dI2-ao-6np" id="KOQ-cn-s5d"/>
                 <outlet property="addressLabel" destination="MZm-tc-dp9" id="BCD-c8-dK1"/>
+                <outlet property="mainView" destination="wx7-Ot-d1Z" id="jo3-rh-82q"/>
                 <outlet property="nameLabel" destination="mJA-iV-u6e" id="48K-Qs-hdK"/>
                 <outlet property="ratingStackView" destination="ml3-gh-Srq" id="TTh-4e-kCe"/>
                 <outlet property="typeLabel" destination="53P-bD-ZV5" id="xn0-OU-Goa"/>
