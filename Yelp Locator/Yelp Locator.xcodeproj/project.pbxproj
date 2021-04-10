@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C5B03889D61B26DC87C36C16 /* Pods_Yelp_Locator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E5467605D6ED8ECFC7E49B /* Pods_Yelp_Locator.framework */; };
+		F0291E002622250700B27585 /* BusinessDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0291DFE2622250700B27585 /* BusinessDetailsViewController.swift */; };
+		F0291E012622250700B27585 /* BusinessDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0291DFF2622250700B27585 /* BusinessDetailsViewController.xib */; };
+		F0291E052622251800B27585 /* BusinessDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0291E042622251800B27585 /* BusinessDetailsViewModel.swift */; };
 		F06F81CD261F6D9700E7A392 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F81CC261F6D9700E7A392 /* ViewController.swift */; };
 		F06F81D0261F6D9700E7A392 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06F81CE261F6D9700E7A392 /* Main.storyboard */; };
 		F06F81D2261F6D9900E7A392 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F06F81D1261F6D9900E7A392 /* Assets.xcassets */; };
@@ -36,6 +39,9 @@
 /* Begin PBXFileReference section */
 		44E5467605D6ED8ECFC7E49B /* Pods_Yelp_Locator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yelp_Locator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC82C0D0324336E07C8C8E3 /* Pods-Yelp Locator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelp Locator.release.xcconfig"; path = "Target Support Files/Pods-Yelp Locator/Pods-Yelp Locator.release.xcconfig"; sourceTree = "<group>"; };
+		F0291DFE2622250700B27585 /* BusinessDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailsViewController.swift; sourceTree = "<group>"; };
+		F0291DFF2622250700B27585 /* BusinessDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessDetailsViewController.xib; sourceTree = "<group>"; };
+		F0291E042622251800B27585 /* BusinessDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailsViewModel.swift; sourceTree = "<group>"; };
 		F06F81C5261F6D9700E7A392 /* Yelp Locator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yelp Locator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F06F81C8261F6D9700E7A392 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F06F81CC261F6D9700E7A392 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +99,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F0291DFB262224E000B27585 /* Business List */ = {
+			isa = PBXGroup;
+			children = (
+				F06F81EC261F709400E7A392 /* BusinessListViewController.swift */,
+				F06F81EB261F709400E7A392 /* BusinessListViewController.xib */,
+				F06F81ED261F709400E7A392 /* BusinessListViewModel.swift */,
+			);
+			path = "Business List";
+			sourceTree = "<group>";
+		};
+		F0291DFD262224ED00B27585 /* BusinessDetails */ = {
+			isa = PBXGroup;
+			children = (
+				F0291DFE2622250700B27585 /* BusinessDetailsViewController.swift */,
+				F0291E042622251800B27585 /* BusinessDetailsViewModel.swift */,
+				F0291DFF2622250700B27585 /* BusinessDetailsViewController.xib */,
+			);
+			path = BusinessDetails;
+			sourceTree = "<group>";
+		};
 		F06F81BC261F6D9700E7A392 = {
 			isa = PBXGroup;
 			children = (
@@ -131,10 +157,9 @@
 		F06F81E9261F707900E7A392 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F0291DFD262224ED00B27585 /* BusinessDetails */,
 				F06F820D261F719900E7A392 /* Cells */,
-				F06F81EC261F709400E7A392 /* BusinessListViewController.swift */,
-				F06F81EB261F709400E7A392 /* BusinessListViewController.xib */,
-				F06F81ED261F709400E7A392 /* BusinessListViewModel.swift */,
+				F0291DFB262224E000B27585 /* Business List */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -264,6 +289,7 @@
 				F06F81EE261F709400E7A392 /* BusinessListViewController.xib in Resources */,
 				F06F8212261F71A900E7A392 /* BusinessListCell.xib in Resources */,
 				F0AD16892620426F004BB442 /* Roboto-Light.ttf in Resources */,
+				F0291E012622250700B27585 /* BusinessDetailsViewController.xib in Resources */,
 				F06F81D0261F6D9700E7A392 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,12 +350,14 @@
 				F06F81FB261F70A300E7A392 /* Business.swift in Sources */,
 				F06F81F7261F70A300E7A392 /* BusinessRouter.swift in Sources */,
 				F06F81F8261F70A300E7A392 /* BusinessRequest.swift in Sources */,
+				F0291E002622250700B27585 /* BusinessDetailsViewController.swift in Sources */,
 				F0AD168E26204A04004BB442 /* UIColor+Extensions.swift in Sources */,
 				F06F81CD261F6D9700E7A392 /* ViewController.swift in Sources */,
 				F06F81FA261F70A300E7A392 /* RequestParameter.swift in Sources */,
 				F0AD16A926205026004BB442 /* CALayer+Extensions.swift in Sources */,
 				F06F81F0261F709400E7A392 /* BusinessListViewModel.swift in Sources */,
 				F0AD16AF26206E9D004BB442 /* UIImage+Extensions.swift in Sources */,
+				F0291E052622251800B27585 /* BusinessDetailsViewModel.swift in Sources */,
 				F06F8213261F71A900E7A392 /* BusinessListCellViewModel.swift in Sources */,
 				F0AD16AC26205800004BB442 /* UINavigationController+Extensions.swift in Sources */,
 			);
