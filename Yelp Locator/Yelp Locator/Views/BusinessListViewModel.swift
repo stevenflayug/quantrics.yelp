@@ -9,10 +9,26 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+public enum SearchType: String {
+    case name = "Business Name"
+    case address = "Business Address"
+    case type = "Business Type"
+    
+    public static let allCases: [SearchType] = [.name, .address, .type]
+}
+
+public enum FilterType: String {
+    case none = "None"
+    case distance = "Distance"
+    case rating = "Rating"
+    
+    public static let allCases: [FilterType] = [.none, .distance, .rating]
+}
+
 class BusinessListViewModel {
     private let router = BusinessRouter()
     
-    let filterValue: BehaviorRelay<String> = BehaviorRelay(value: "")
+    let searchTextValue: BehaviorRelay<String> = BehaviorRelay(value: "")
     let businessList: BehaviorRelay<[Business]> = BehaviorRelay(value: [])
     let businessListContainer: BehaviorRelay<[Business]> = BehaviorRelay(value: [])
     let errorMessage: BehaviorRelay<String> = BehaviorRelay(value: "")
@@ -21,7 +37,7 @@ class BusinessListViewModel {
     
     func getBusinessList() {
         // TODO: Mock coordinates, should be based on location
-        router.startBusinessListRequest(options: BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639, distance: nil, rating: nil)) { [weak self] (data, error) in
+        router.startBusinessListRequest(options: BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639)) { [weak self] (data, error) in
             guard let _self = self else { return }
             guard data != nil else {
                 _self.errorMessage.accept(error ?? "")
@@ -33,27 +49,60 @@ class BusinessListViewModel {
     }
     
     func setupObservables() {
-        self.filterValue.asObservable().subscribe(onNext: { [weak self] (searchText) in
+        self.startBusinessListRequest(filterBy: .none)
+        
+        self.searchTextValue.asObservable().subscribe(onNext: { [weak self] in
             guard let _self = self else { return }
-            var filteredList: [Business] = []
-            switch _self.searchCategory {
-            case .name:
-                filteredList = _self.businessListContainer.value.filter({$0.name.lowercased().contains(searchText.lowercased())})
-            case .address:
-                filteredList = _self.businessListContainer.value.filter({$0.completeAddress.lowercased().contains(searchText.lowercased())})
-            default:
-                filteredList = _self.businessListContainer.value.filter({$0.completeCategory.lowercased().contains(searchText.lowercased())})
-            }
-            if searchText != "" {
-                _self.businessList.accept(filteredList)
-            } else {
-                _self.businessList.accept(_self.businessListContainer.value)
-            }
+            _self.searchBusinesses(searchText: $0)
         }).disposed(by: self.disposeBag)
     }
     
     func setSearchCategory(category: SearchType) {
         self.searchCategory = category
+    }
+    
+    func setFilterType(filterType: FilterType) {
+        self.startBusinessListRequest(filterBy: filterType)
+    }
+    
+    private func startBusinessListRequest(filterBy: FilterType) {
+        var requestParameters = BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639)
+        
+            switch filterBy {
+            case .distance:
+                requestParameters = BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639, distance: true)
+            case .rating:
+                requestParameters = BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639, rating: true)
+            default:
+                break
+            }
+        
+        self.router.startBusinessListRequest(options: requestParameters) { [weak self] (data, error) in
+            guard let _self = self else { return }
+            guard data != nil else {
+                _self.errorMessage.accept(error ?? "")
+                return
+            }
+            _self.businessListContainer.accept(data?.businesses ?? [])
+            _self.searchBusinesses(searchText: _self.searchTextValue.value)
+        }
+    }
+    
+    private func searchBusinesses(searchText: String) {
+        var filteredList: [Business] = []
+        switch self.searchCategory {
+        case .name:
+            filteredList = self.businessListContainer.value.filter({$0.name.lowercased().contains(searchText.lowercased())})
+        case .address:
+            filteredList = self.businessListContainer.value.filter({$0.completeAddress.lowercased().contains(searchText.lowercased())})
+        default:
+            filteredList = self.businessListContainer.value.filter({$0.completeCategory.lowercased().contains(searchText.lowercased())})
+        }
+        if searchText != "" {
+            self.businessList.accept(filteredList)
+        } else {
+            self.businessList.accept(self.businessListContainer.value)
+        }
     }
 }
 

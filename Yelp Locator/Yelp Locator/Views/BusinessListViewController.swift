@@ -16,7 +16,9 @@ class BusinessListViewController: UIViewController {
     
     @IBOutlet weak var businessListTableview: UITableView!
     
+    private var filterBarButton = UIBarButtonItem()
     private var searchByPickerView = UIPickerView()
+    private var filterPickerView = UIPickerView()
     
     private let viewModel = BusinessListViewModel()
     private let disposeBag = DisposeBag()
@@ -37,6 +39,33 @@ class BusinessListViewController: UIViewController {
         self.navigationController?.setStatusBar(backgroundColor: UIColor(hexString: "#d32323"))
         self.navigationController?.navigationBar.backgroundColor = UIColor(hexString: "#d32323")
         self.navigationController?.navigationBar.isTranslucent = true
+        
+        let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let filterDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(filterDoneTapped))
+
+        let filterToolBar = UIToolbar()
+        filterToolBar.barStyle = UIBarStyle.default
+        filterToolBar.isTranslucent = true
+        filterToolBar.tintColor = UIColor.systemBlue
+        filterToolBar.sizeToFit()
+        filterToolBar.setItems([padding, filterDoneButton], animated: false)
+        filterToolBar.isUserInteractionEnabled = true
+        
+        let filterItem = UITextField()
+        filterItem.delegate = self
+        filterItem.tintColor = .clear
+        filterItem.borderStyle = .none
+        filterItem.backgroundColor = .clear
+        filterItem.leftViewMode = .always
+        filterItem.leftView = UIImageView(image: UIImage(named: "filter")?.resizeImage(20.0))
+        filterItem.inputView = self.filterPickerView
+        filterItem.inputAccessoryView = filterToolBar
+        
+        self.filterPickerView.delegate = self
+        self.filterPickerView.dataSource = self
+        
+        filterBarButton = UIBarButtonItem(customView: filterItem)
+        self.navigationItem.rightBarButtonItem = self.filterBarButton
     }
     
     private func setupTableView() {
@@ -74,18 +103,18 @@ class BusinessListViewController: UIViewController {
         self.searchByPickerView.delegate = self
         self.searchByPickerView.dataSource = self
         
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor.systemBlue
-        toolBar.sizeToFit()
+        let searchToolBar = UIToolbar()
+        searchToolBar.barStyle = UIBarStyle.default
+        searchToolBar.isTranslucent = true
+        searchToolBar.tintColor = UIColor.systemBlue
+        searchToolBar.sizeToFit()
 
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(doneTapped))
+        let searchDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(searchDoneTapped))
         let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
 
-        toolBar.setItems([padding, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        self.searchByTextField.inputAccessoryView = toolBar
+        searchToolBar.setItems([padding, searchDoneButton], animated: false)
+        searchToolBar.isUserInteractionEnabled = true
+        self.searchByTextField.inputAccessoryView = searchToolBar
     }
     
     private func setupActions() {
@@ -115,17 +144,26 @@ class BusinessListViewController: UIViewController {
     private func bindValues() {
         self.viewModel.setupObservables()
         
-        searchTextField.rx.text
+        self.searchTextField.rx.text
             .orEmpty
-            .bind(to: self.viewModel.filterValue)
+            .bind(to: self.viewModel.searchTextValue)
             .disposed(by: self.disposeBag)
     }
     
-    @objc func doneTapped() {
+    @objc func searchDoneTapped() {
         if self.searchByPickerView.selectedRow(inComponent: 0) == 0 {
             self.searchByTextField.text = "Search by: \(SearchType.allCases[0].rawValue) "
         }
         self.searchByTextField.resignFirstResponder()
+    }
+    
+    @objc func filterDoneTapped() {
+        if self.filterPickerView.selectedRow(inComponent: 0) == 0 {
+            self.viewModel.setFilterType(filterType: FilterType.allCases[0])
+        } else {
+            self.viewModel.setFilterType(filterType: FilterType.allCases[self.filterPickerView.selectedRow(inComponent: 0)])
+        }
+        self.filterBarButton.customView?.resignFirstResponder()
     }
 }
 
@@ -137,7 +175,11 @@ extension BusinessListViewController: UITextFieldDelegate {
 
 extension BusinessListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return SearchType.allCases.count
+        if pickerView == self.searchByPickerView {
+            return SearchType.allCases.count
+        } else {
+            return FilterType.allCases.count
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -145,22 +187,17 @@ extension BusinessListViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return SearchType.allCases[row].rawValue
+        if pickerView == self.searchByPickerView {
+            return SearchType.allCases[row].rawValue
+        } else {
+            return FilterType.allCases[row].rawValue
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.searchByTextField.text = "Search by: \(SearchType.allCases[row].rawValue) "
-        self.viewModel.setSearchCategory(category: SearchType.allCases[row])
+        if pickerView == self.searchByPickerView {
+            self.searchByTextField.text = "Search by: \(SearchType.allCases[row].rawValue) "
+            self.viewModel.setSearchCategory(category: SearchType.allCases[row])
+        }
     }
-}
-
-
-// TODO: Move to viewmodel
-
-public enum SearchType: String {
-    case name = "Business Name"
-    case address = "Business Address"
-    case type = "Business Type"
-    
-    public static let allCases: [SearchType] = [.name, .address, .type]
 }

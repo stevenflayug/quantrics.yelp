@@ -10,8 +10,8 @@ import Foundation
 public struct BusinessRequestOptions {
     var longitude: Double
     var latitude: Double
-    var distance: String?
-    var rating: String?
+    var distance: Bool? = nil
+    var rating: Bool? = nil
 }
 
 extension BusinessRequestOptions: RequestParameter {
@@ -19,13 +19,12 @@ extension BusinessRequestOptions: RequestParameter {
         var parameters = [String : Any]()
         parameters["longitude"] = longitude
         parameters["latitude"] = latitude
+        parameters["sort_by"] = "best_match"
         
         if distance != nil {
-            parameters["distance"] = distance
-        }
-        
-        if rating != nil {
-            parameters["rating"] = rating
+            parameters["sort_by"] = "distance"
+        } else if rating != nil {
+            parameters["sort_by"] = "rating"
         }
         
         return parameters
