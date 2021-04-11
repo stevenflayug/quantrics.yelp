@@ -9,8 +9,4 @@ import Foundation
 
 public struct BusinessReviewsRequestOptions {
     var id: String
-    
-//    init(id: String) {
-//        self.id = id
-//    }
 }

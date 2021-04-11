@@ -18,6 +18,8 @@
 		F0291E1E2622E7A900B27585 /* BusinessDetailsRequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0291E1D2622E7A900B27585 /* BusinessDetailsRequestOptions.swift */; };
 		F0291E212622E7BB00B27585 /* BusinessReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0291E202622E7BB00B27585 /* BusinessReviews.swift */; };
 		F0291E242622E7C600B27585 /* BusinessReviewsRequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0291E232622E7C600B27585 /* BusinessReviewsRequestOptions.swift */; };
+		F0291E3C26231B7D00B27585 /* BusinessReviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0291E3A26231B7D00B27585 /* BusinessReviewView.xib */; };
+		F0291E3D26231B7D00B27585 /* BusinessReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0291E3B26231B7D00B27585 /* BusinessReviewView.swift */; };
 		F06F81CD261F6D9700E7A392 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F81CC261F6D9700E7A392 /* ViewController.swift */; };
 		F06F81D0261F6D9700E7A392 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F06F81CE261F6D9700E7A392 /* Main.storyboard */; };
 		F06F81D2261F6D9900E7A392 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F06F81D1261F6D9900E7A392 /* Assets.xcassets */; };
@@ -56,6 +58,8 @@
 		F0291E1D2622E7A900B27585 /* BusinessDetailsRequestOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailsRequestOptions.swift; sourceTree = "<group>"; };
 		F0291E202622E7BB00B27585 /* BusinessReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessReviews.swift; sourceTree = "<group>"; };
 		F0291E232622E7C600B27585 /* BusinessReviewsRequestOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessReviewsRequestOptions.swift; sourceTree = "<group>"; };
+		F0291E3A26231B7D00B27585 /* BusinessReviewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessReviewView.xib; sourceTree = "<group>"; };
+		F0291E3B26231B7D00B27585 /* BusinessReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessReviewView.swift; sourceTree = "<group>"; };
 		F06F81C5261F6D9700E7A392 /* Yelp Locator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yelp Locator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F06F81C8261F6D9700E7A392 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F06F81CC261F6D9700E7A392 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 		F0291DFD262224ED00B27585 /* Business Details */ = {
 			isa = PBXGroup;
 			children = (
+				F0291E3926231B2F00B27585 /* Review Item */,
 				F0291E072622DE9200B27585 /* Detail Item */,
 				F0291DFE2622250700B27585 /* BusinessDetailsViewController.swift */,
 				F0291E042622251800B27585 /* BusinessDetailsViewModel.swift */,
@@ -176,6 +181,15 @@
 				F0291E232622E7C600B27585 /* BusinessReviewsRequestOptions.swift */,
 			);
 			path = "Business Reviews";
+			sourceTree = "<group>";
+		};
+		F0291E3926231B2F00B27585 /* Review Item */ = {
+			isa = PBXGroup;
+			children = (
+				F0291E3B26231B7D00B27585 /* BusinessReviewView.swift */,
+				F0291E3A26231B7D00B27585 /* BusinessReviewView.xib */,
+			);
+			path = "Review Item";
 			sourceTree = "<group>";
 		};
 		F06F81BC261F6D9700E7A392 = {
@@ -346,6 +360,7 @@
 				F06F81D5261F6D9900E7A392 /* LaunchScreen.storyboard in Resources */,
 				F0AD16882620426F004BB442 /* Roboto-Regular.ttf in Resources */,
 				F06F81D2261F6D9900E7A392 /* Assets.xcassets in Resources */,
+				F0291E3C26231B7D00B27585 /* BusinessReviewView.xib in Resources */,
 				F0AD16872620426F004BB442 /* Roboto-Bold.ttf in Resources */,
 				F06F81EE261F709400E7A392 /* BusinessListViewController.xib in Resources */,
 				F06F8212261F71A900E7A392 /* BusinessListCell.xib in Resources */,
@@ -417,6 +432,7 @@
 				F0291E002622250700B27585 /* BusinessDetailsViewController.swift in Sources */,
 				F0AD168E26204A04004BB442 /* UIColor+Extensions.swift in Sources */,
 				F06F81CD261F6D9700E7A392 /* ViewController.swift in Sources */,
+				F0291E3D26231B7D00B27585 /* BusinessReviewView.swift in Sources */,
 				F06F81FA261F70A300E7A392 /* RequestParameter.swift in Sources */,
 				F0AD16A926205026004BB442 /* CALayer+Extensions.swift in Sources */,
 				F06F81F0261F709400E7A392 /* BusinessListViewModel.swift in Sources */,

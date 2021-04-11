@@ -14,6 +14,8 @@ class BusinessDetailsViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoStackView: UIStackView!
+    @IBOutlet weak var reviewsTitleLabel: UILabel!
+    @IBOutlet weak var reviewsStackView: UIStackView!
     @IBOutlet weak var dealsTitleLabel: UILabel!
     @IBOutlet weak var dealsButton: UIButton!
     
@@ -57,7 +59,7 @@ class BusinessDetailsViewController: UIViewController {
 //        filterToolBar.sizeToFit()
 //        filterToolBar.setItems([padding, filterDoneButton], animated: false)
 //        filterToolBar.isUserInteractionEnabled = true
-//        
+//
 //        let filterItem = UITextField()
 //        filterItem.delegate = self
 //        filterItem.tintColor = .clear
@@ -67,20 +69,27 @@ class BusinessDetailsViewController: UIViewController {
 //        filterItem.leftView = UIImageView(image: UIImage(named: "filter")?.resizeImage(20.0))
 //        filterItem.inputView = self.filterPickerView
 //        filterItem.inputAccessoryView = filterToolBar
-//        
+//
 //        self.filterPickerView.delegate = self
 //        self.filterPickerView.dataSource = self
-//        
+//
 //        filterBarButton = UIBarButtonItem(customView: filterItem)
 //        self.navigationItem.rightBarButtonItem = self.filterBarButton
     }
     
     func setupViews() {
-        self.infoStackView.spacing = 5.0
+        self.infoStackView.spacing = 0.0
         self.infoStackView.distribution = .fillProportionally
+        
+        self.reviewsStackView.spacing = 0.0
+        self.reviewsStackView.distribution = .fillProportionally
         
         self.titleLabel.font = UIFont(name: "Roboto-Bold", size: 20.0)
         self.titleLabel.textColor = UIColor(hexString: "#d32323")
+        
+        self.reviewsTitleLabel.text = "Reviews"
+        self.reviewsTitleLabel.font = UIFont(name: "Roboto-Bold", size: 20.0)
+        self.reviewsTitleLabel.textColor = UIColor(hexString: "#d32323")
         
         self.dealsTitleLabel.text = "Deals"
         self.dealsTitleLabel.font = UIFont(name: "Roboto-Bold", size: 20.0)
@@ -129,17 +138,31 @@ class BusinessDetailsViewController: UIViewController {
             detailView.setupDetailItem(detailItem: $0, business: details)
             _self.infoStackView.addArrangedSubview(detailView)
         }
-//        self.infoStackView.layoutIfNeeded()
+        self.infoStackView.layoutIfNeeded()
     }
     
     private func setupReviews(reviews: [Review]) {
-//        DetailItem.allCases.forEach {
-//            let detailView = BusinessDetailView()
-//            detailView.setupDetailItem(detailItem: $0, business: details)
-//        }
+        reviews.forEach { [weak self] in
+            guard let _self = self else { return }
+            let reviewView: BusinessReviewView = .fromNib()
+            reviewView.setupReviewItem(reviewItem: $0)
+            _self.reviewsStackView.addArrangedSubview(reviewView)
+            
+            if let imageUrl = URL(string: $0.user.imageURL) {
+                _self.viewModel.getData(from: imageUrl) { data, response, error in
+                    guard let data = data, error == nil else { return }
+                    DispatchQueue.main.async() { [weak self] in
+                        guard let _ = self else { return }
+                        reviewView.setUserImage(image: UIImage(data: data) ?? UIImage())
+                    }
+                }
+            }
+        }
+        self.infoStackView.layoutIfNeeded()
     }
 }
 
+//TODO: Move to extension
 extension UIView {
     class func fromNib<T: UIView>() -> T {
         return Bundle(for: T.self).loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
