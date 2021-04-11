@@ -24,7 +24,7 @@ class BusinessListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
-        self.viewModel.getBusinessList()
+        self.viewModel.startBusinessListRequest(filterBy: .none)
         self.setupNavigationBar()
         self.setupViews()
         self.setupTableView()
@@ -129,9 +129,10 @@ class BusinessListViewController: UIViewController {
             cell.setupCell(business: item)
         }.disposed(by: disposeBag)
         
-        self.viewModel.businessList.asObservable().subscribe(onNext: { [unowned self] (_) in
-            self.businessListTableview.reloadData()
-            self.businessListTableview.reloadInputViews()
+        self.viewModel.businessList.asObservable().subscribe(onNext: { [weak self] (_) in
+            guard let _self = self else { return }
+            _self.businessListTableview.reloadData()
+            _self.businessListTableview.reloadInputViews()
         }).disposed(by: disposeBag)
     }
     

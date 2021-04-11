@@ -10,6 +10,8 @@ import Moya
 
 public enum UserRequest {
     case businessList(options: BusinessRequestOptions)
+    case businessDetails(options: BusinessDetailsRequestOptions)
+    case businessReviews(options: BusinessReviewsRequestOptions)
 }
 
 extension UserRequest: TargetType {
@@ -20,13 +22,13 @@ extension UserRequest: TargetType {
   public var path: String {
     switch self {
     case .businessList: return "/search"
+    case .businessDetails(let options): return "/\(options.id)"
+    case .businessReviews(let options): return "/\(options.id)/reviews"
     }
   }
 
   public var method: Moya.Method {
-    switch self {
-    case .businessList: return .get
-    }
+    return .get
   }
 
   public var sampleData: Data {
@@ -37,6 +39,9 @@ extension UserRequest: TargetType {
     switch self {
     case .businessList(let options):
         return .requestParameters(parameters: options.urlParameters,
+                                  encoding: URLEncoding.default)
+    default:
+        return .requestParameters(parameters: ["locale": "en_US"],
                                   encoding: URLEncoding.default)
     }
  }

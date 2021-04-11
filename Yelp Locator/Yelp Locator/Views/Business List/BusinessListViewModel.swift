@@ -9,22 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-public enum SearchType: String {
-    case name = "Business Name"
-    case address = "Business Address"
-    case type = "Business Type"
-    
-    public static let allCases: [SearchType] = [.name, .address, .type]
-}
-
-public enum FilterType: String {
-    case none = "None"
-    case distance = "Distance"
-    case rating = "Rating"
-    
-    public static let allCases: [FilterType] = [.none, .distance, .rating]
-}
-
 class BusinessListViewModel {
     private let router = BusinessRouter()
     
@@ -34,20 +18,7 @@ class BusinessListViewModel {
     let errorMessage: BehaviorRelay<String> = BehaviorRelay(value: "")
     let disposeBag = DisposeBag()
     var searchCategory: SearchType = .name
-    
-    func getBusinessList() {
-        // TODO: Mock coordinates, should be based on location
-        router.startBusinessListRequest(options: BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639)) { [weak self] (data, error) in
-            guard let _self = self else { return }
-            guard data != nil else {
-                _self.errorMessage.accept(error ?? "")
-                return
-            }
-            _self.businessListContainer.accept(data?.businesses ?? [])
-            _self.businessList.accept(data?.businesses ?? [])
-        }
-    }
-    
+
     func setupObservables() {
         self.startBusinessListRequest(filterBy: .none)
         
@@ -65,7 +36,7 @@ class BusinessListViewModel {
         self.startBusinessListRequest(filterBy: filterType)
     }
     
-    private func startBusinessListRequest(filterBy: FilterType) {
+    func startBusinessListRequest(filterBy: FilterType) {
         var requestParameters = BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639)
         
             switch filterBy {

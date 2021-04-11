@@ -33,4 +33,48 @@ class BusinessRouter {
             }
         }
     }
+    
+    public func startBusinessDetailsRequest(options: BusinessDetailsRequestOptions, completion: @escaping (_ businessList: BusinessDetailsData?, _ error: String?) -> Void) {
+        provider.request(.businessDetails(options: options)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    print(try response.mapJSON())
+                    if let results = try? response.map(BusinessDetailsData.self) {
+                        print(results)
+                        completion(results, nil)
+                    }
+                } catch let error {
+                    print(error)
+                    completion(nil, "No businesses details retrieved")
+                    return
+                }
+            case .failure(let error):
+                completion(nil, error.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    public func startBusinessReviewsRequest(options: BusinessReviewsRequestOptions, completion: @escaping (_ businessList: BusinessReviewsData?, _ error: String?) -> Void) {
+        provider.request(.businessReviews(options: options)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    print(try response.mapJSON())
+                    if let results = try? response.map(BusinessReviewsData.self) {
+                        print(results)
+                        completion(results, nil)
+                    }
+                } catch let error {
+                    print(error)
+                    completion(nil, "No businesses reviews retrieved")
+                    return
+                }
+            case .failure(let error):
+                completion(nil, error.localizedDescription)
+                return
+            }
+        }
+    }
 }

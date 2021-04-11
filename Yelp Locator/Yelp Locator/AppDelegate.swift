@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         //TODO Change to landing page
-        let businessListVC = UINavigationController(rootViewController: BusinessDetailsViewController())
+        let businessListVC = UINavigationController(rootViewController: BusinessDetailsViewController(businessId: "pinto-art-museum-antipolo"))
         window?.rootViewController = businessListVC
         return true
     }
