@@ -38,16 +38,19 @@ class BusinessDetailsViewController: UIViewController {
         self.setupNavigationBar()
         self.setupViews()
         self.setupObservables()
-        self.viewModel.startBusinessDetailsRequest()
         self.viewModel.startBusinessReviewsRequest()
     }
     
     private func setupNavigationBar() {
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.setStatusBar(backgroundColor: UIColor(hexString: "#d32323"))
-        self.navigationController?.navigationBar.backgroundColor = UIColor(hexString: "#d32323")
-        self.navigationController?.navigationBar.isTranslucent = true
+        self.title = "Business Details"
+        
+        guard let _navigationController = self.navigationController else { return }
+        _navigationController.navigationBar.tintColor = .white
+        _navigationController.navigationBar.isHidden = false
+        _navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        _navigationController.setStatusBar(backgroundColor: UIColor(hexString: "#d32323"))
+        _navigationController.navigationBar.backgroundColor = UIColor(hexString: "#d32323")
+        _navigationController.navigationBar.isTranslucent = true
         
 //        let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
 //        let filterDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(filterDoneTapped))
@@ -78,26 +81,31 @@ class BusinessDetailsViewController: UIViewController {
     }
     
     func setupViews() {
+
         self.infoStackView.spacing = 0.0
+        self.infoStackView.layer.cornerRadius = 8.0
         self.infoStackView.distribution = .fillProportionally
+        self.infoStackView.clipsToBounds = true
         
         self.reviewsStackView.spacing = 0.0
+        self.reviewsStackView.layer.cornerRadius = 8.0
         self.reviewsStackView.distribution = .fillProportionally
+        self.reviewsStackView.clipsToBounds = true
         
-        self.titleLabel.font = UIFont(name: "Roboto-Bold", size: 20.0)
+        self.titleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
         self.titleLabel.textColor = UIColor(hexString: "#d32323")
         
         self.reviewsTitleLabel.text = "Reviews"
-        self.reviewsTitleLabel.font = UIFont(name: "Roboto-Bold", size: 20.0)
+        self.reviewsTitleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
         self.reviewsTitleLabel.textColor = UIColor(hexString: "#d32323")
         
         self.dealsTitleLabel.text = "Deals"
-        self.dealsTitleLabel.font = UIFont(name: "Roboto-Bold", size: 20.0)
+        self.dealsTitleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
         self.dealsTitleLabel.textColor = UIColor(hexString: "#d32323")
         
         self.dealsButton.setTitle(" See Deals ", for: .normal)
         self.dealsButton.setTitleColor(.white, for: .normal)
-        self.dealsButton.titleLabel?.font = UIFont(name: "Roboto-Bold", size: 15.0)
+        self.dealsButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 15.0)
         self.dealsButton.backgroundColor = UIColor(hexString: "#d32323")
         self.dealsButton.layer.cornerRadius = 5.0
     }
@@ -120,12 +128,12 @@ class BusinessDetailsViewController: UIViewController {
     private func setupHeader(info: BusinessDetailsData) {
         self.titleLabel.text = info.name
         
-        if let imageUrl = URL(string: info.imageURL) {
+        if let imageUrl = URL(string: info.imageURL ?? "") {
             self.viewModel.getData(from: imageUrl) { data, response, error in
                 guard let data = data, error == nil else { return }
                 DispatchQueue.main.async() { [weak self] in
                     guard let _self = self else { return }
-                    _self.imageView.image = UIImage(data: data)
+                    _self.imageView.image = UIImage(data: data)?.withRoundedCorners(radius: 15.0)
                 }
             }
         }
@@ -138,7 +146,6 @@ class BusinessDetailsViewController: UIViewController {
             detailView.setupDetailItem(detailItem: $0, business: details)
             _self.infoStackView.addArrangedSubview(detailView)
         }
-        self.infoStackView.layoutIfNeeded()
     }
     
     private func setupReviews(reviews: [Review]) {
@@ -158,7 +165,6 @@ class BusinessDetailsViewController: UIViewController {
                 }
             }
         }
-        self.infoStackView.layoutIfNeeded()
     }
 }
 

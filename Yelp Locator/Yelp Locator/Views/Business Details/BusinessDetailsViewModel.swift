@@ -22,11 +22,6 @@ class BusinessDetailsViewModel {
         self.businessId = businessId
     }
     
-    func setupObservables() {
-        self.startBusinessDetailsRequest()
-        self.startBusinessDetailsRequest()
-    }
-    
     func startBusinessDetailsRequest() {
         self.router.startBusinessDetailsRequest(options: BusinessDetailsRequestOptions(id: self.businessId)) { [weak self] (data, error) in
             guard let _self = self else { return }
@@ -42,9 +37,11 @@ class BusinessDetailsViewModel {
         self.router.startBusinessReviewsRequest(options: BusinessReviewsRequestOptions(id: self.businessId)) { [weak self] (data, error) in
             guard let _self = self else { return }
             guard data != nil else {
+                _self.startBusinessDetailsRequest()
                 _self.errorMessage.accept(error ?? "")
                 return
             }
+            _self.startBusinessDetailsRequest()
             _self.businessReviews.accept(data?.reviews ?? [])
         }
     }

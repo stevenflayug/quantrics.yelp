@@ -28,7 +28,6 @@ public enum DetailItem: String {
     case hoursOfOperation = "Operating Hours"
     case address = "Address"
     case contactNo = "Contact Number"
-    case ratings = "Ratings"
     
-    public static let allCases: [DetailItem] = [.categories, .hoursOfOperation, .address, .contactNo, .ratings]
+    public static let allCases: [DetailItem] = [.categories, .hoursOfOperation, .address, .contactNo]
 }

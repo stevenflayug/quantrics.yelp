@@ -24,16 +24,17 @@ class BusinessListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
-        self.viewModel.startBusinessListRequest(filterBy: .none)
         self.setupNavigationBar()
         self.setupViews()
         self.setupTableView()
         self.setupObservables()
         self.bindValues()
         self.setupActions()
+        self.viewModel.startBusinessListRequest(filterBy: .none)
     }
 
     private func setupNavigationBar() {
+        self.title = "Businesses List"
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.setStatusBar(backgroundColor: UIColor(hexString: "#d32323"))
@@ -77,8 +78,6 @@ class BusinessListViewController: UIViewController {
         
         self.businessListTableview.delegate = nil
         self.businessListTableview.dataSource = nil
-        self.businessListTableview.separatorStyle = .singleLine
-        self.businessListTableview.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         self.searchView.backgroundColor = .clear
         self.view.backgroundColor = UIColor(hexString: "0xEEEEEE")
@@ -134,13 +133,13 @@ class BusinessListViewController: UIViewController {
             _self.businessListTableview.reloadData()
             _self.businessListTableview.reloadInputViews()
         }).disposed(by: disposeBag)
+        
+        self.businessListTableview.rx.itemSelected.subscribe(onNext: { [weak self] (indexPath) in
+            guard let _self = self else { return }
+            let businessDetailsVC = BusinessDetailsViewController(businessId: _self.viewModel.businessList.value[indexPath.row].alias)
+            _self.navigationController?.pushViewController(businessDetailsVC, animated: true)
+        }).disposed(by: disposeBag)
     }
-    
-//        self.businessListTableview.rx.itemSelected.subscribe(onNext: { [weak self] (indexPath) in
-//            let userDetailsVC = UserDetailsTableViewController()
-//            userDetailsVC.user.accept(self!.viewModel.userList.value[indexPath.row])
-//            self?.navigationController?.pushViewController(userDetailsVC, animated: true)
-//        }).disposed(by: disposeBag)
     
     private func bindValues() {
         self.viewModel.setupObservables()

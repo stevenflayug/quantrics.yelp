@@ -12,16 +12,18 @@ class BusinessListCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var actionImageView: UIImageView!
     @IBOutlet weak var ratingStackView: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        
-        for family in UIFont.familyNames.sorted() {
-            let names = UIFont.fontNames(forFamilyName: family)
-            print("Family: \(family) Font names: \(names)")
+    }
+    
+    override func prepareForReuse() {
+        ratingStackView.arrangedSubviews.forEach {
+            $0.removeFromSuperview()
         }
     }
     
@@ -31,11 +33,32 @@ class BusinessListCell: UITableViewCell {
         self.addressLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
         self.addressLabel.numberOfLines = 0
         self.typeLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
+        self.distanceLabel.font = UIFont(name: "Roboto-Regular", size: 10.0)
+        self.actionImageView.image = UIImage(named: "chevronRight")?.resizeImage(5.0).withTintColor(UIColor(hexString: "0xEEEEEE"))
+        self.actionImageView.contentMode = .scaleAspectFit
     }
     
     func setupCell(business: Business) {
         nameLabel.text = business.name
         addressLabel.text = business.completeAddress
         typeLabel.text = business.completeCategory
+        distanceLabel.text = "\(business.distance) Meters Away"
+        self.setupRatingView(rating: business.rating)
+    }
+    
+    private func setupRatingView(rating: Double) {
+        let intValue = Int(floor(rating))
+        for _ in (1...intValue) {
+            let fullStarImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            fullStarImageView.image = UIImage(named: "fullStar")?.resizeImage(20.0)
+            ratingStackView.addArrangedSubview(fullStarImageView)
+        }
+        
+        let decimal = rating.truncatingRemainder(dividingBy: 1)
+        if decimal != 0.0 {
+            let halfStarImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            halfStarImageView.image = UIImage(named: "halfStar")?.resizeImage(20.0)
+            ratingStackView.addArrangedSubview(halfStarImageView)
+        }
     }
 }
