@@ -29,12 +29,12 @@ class BusinessListCell: UITableViewCell {
     
     private func setupUI() {
         self.nameLabel.font = UIFont(name: "Roboto-Regular", size: 15.0)
-        self.nameLabel.textColor = UIColor(hexString: "#d32323")
+        self.nameLabel.textColor = .primaryColor
         self.addressLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
         self.addressLabel.numberOfLines = 0
         self.typeLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
         self.distanceLabel.font = UIFont(name: "Roboto-Regular", size: 10.0)
-        self.actionImageView.image = UIImage(named: "chevronRight")?.resizeImage(5.0).withTintColor(UIColor(hexString: "0xEEEEEE"))
+        self.actionImageView.image = UIImage(named: "chevronRight")?.resizeImage(5.0).withTintColor(.backgroundColor)
         self.actionImageView.contentMode = .scaleAspectFit
     }
     
@@ -42,22 +42,22 @@ class BusinessListCell: UITableViewCell {
         nameLabel.text = business.name
         addressLabel.text = business.completeAddress
         typeLabel.text = business.completeCategory
-        distanceLabel.text = "\(business.distance) Meters Away"
-        self.setupRatingView(rating: business.rating)
+        distanceLabel.text = "\(business.distance ?? 0.0) Meters Away"
+        self.setupRatingView(rating: business.rating ?? 1.0)
     }
     
     private func setupRatingView(rating: Double) {
         let intValue = Int(floor(rating))
         for _ in (1...intValue) {
             let fullStarImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-            fullStarImageView.image = UIImage(named: "fullStar")?.resizeImage(20.0)
+            fullStarImageView.image = UIImage(named: "fullStar")?.resizeImage(20.0).withTintColor(.primaryColor)
             ratingStackView.addArrangedSubview(fullStarImageView)
         }
         
         let decimal = rating.truncatingRemainder(dividingBy: 1)
         if decimal != 0.0 {
             let halfStarImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-            halfStarImageView.image = UIImage(named: "halfStar")?.resizeImage(20.0)
+            halfStarImageView.image = UIImage(named: "halfStar")?.resizeImage(20.0).withTintColor(.primaryColor)
             ratingStackView.addArrangedSubview(halfStarImageView)
         }
     }

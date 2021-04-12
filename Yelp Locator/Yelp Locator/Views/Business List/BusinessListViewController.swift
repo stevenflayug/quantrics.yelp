@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import PKHUD
 
 class BusinessListViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
@@ -24,6 +25,9 @@ class BusinessListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
+        HUD.dimsBackground = false
+        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
+        
         self.setupNavigationBar()
         self.setupViews()
         self.setupTableView()
@@ -37,8 +41,8 @@ class BusinessListViewController: UIViewController {
         self.title = "Businesses List"
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.setStatusBar(backgroundColor: UIColor(hexString: "#d32323"))
-        self.navigationController?.navigationBar.backgroundColor = UIColor(hexString: "#d32323")
+        self.navigationController?.setStatusBar(backgroundColor: .primaryColor)
+        self.navigationController?.navigationBar.backgroundColor = .primaryColor
         self.navigationController?.navigationBar.isTranslucent = true
         
         let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
@@ -80,7 +84,7 @@ class BusinessListViewController: UIViewController {
         self.businessListTableview.dataSource = nil
         
         self.searchView.backgroundColor = .clear
-        self.view.backgroundColor = UIColor(hexString: "0xEEEEEE")
+        self.view.backgroundColor = .backgroundColor
         
         businessListTableview.layer.cornerRadius = 8.0
         
@@ -130,14 +134,21 @@ class BusinessListViewController: UIViewController {
         
         self.viewModel.businessList.asObservable().subscribe(onNext: { [weak self] (_) in
             guard let _self = self else { return }
+            HUD.hide(animated: true)
             _self.businessListTableview.reloadData()
             _self.businessListTableview.reloadInputViews()
         }).disposed(by: disposeBag)
         
         self.businessListTableview.rx.itemSelected.subscribe(onNext: { [weak self] (indexPath) in
             guard let _self = self else { return }
-            let businessDetailsVC = BusinessDetailsViewController(businessId: _self.viewModel.businessList.value[indexPath.row].alias)
+            let businessDetailsVC = BusinessDetailsViewController(businessId: _self.viewModel.businessList.value[indexPath.row].alias ?? "")
             _self.navigationController?.pushViewController(businessDetailsVC, animated: true)
+        }).disposed(by: disposeBag)
+        
+        viewModel.errorMessage.asObservable().subscribe(onNext: { (error) in
+            if error != "" {
+                HUD.flash(.labeledError(title: "Business List Service Error", subtitle: error), onView: self.view, delay: 1, completion: nil)
+            }
         }).disposed(by: disposeBag)
     }
     
@@ -152,16 +163,17 @@ class BusinessListViewController: UIViewController {
     
     @objc func searchDoneTapped() {
         if self.searchByPickerView.selectedRow(inComponent: 0) == 0 {
-            self.searchByTextField.text = "Search by: \(SearchType.allCases[0].rawValue) "
+            self.searchByTextField.text = "Search by: \(self.viewModel.searchTypes[0].rawValue) "
         }
         self.searchByTextField.resignFirstResponder()
     }
     
     @objc func filterDoneTapped() {
+        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
         if self.filterPickerView.selectedRow(inComponent: 0) == 0 {
-            self.viewModel.setFilterType(filterType: FilterType.allCases[0])
+            self.viewModel.setFilterType(filterType: self.viewModel.filterTypes[0])
         } else {
-            self.viewModel.setFilterType(filterType: FilterType.allCases[self.filterPickerView.selectedRow(inComponent: 0)])
+            self.viewModel.setFilterType(filterType: self.viewModel.filterTypes[self.filterPickerView.selectedRow(inComponent: 0)])
         }
         self.filterBarButton.customView?.resignFirstResponder()
     }
@@ -176,9 +188,9 @@ extension BusinessListViewController: UITextFieldDelegate {
 extension BusinessListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView == self.searchByPickerView {
-            return SearchType.allCases.count
+            return self.viewModel.searchTypes.count
         } else {
-            return FilterType.allCases.count
+            return self.viewModel.filterTypes.count
         }
     }
     
@@ -188,16 +200,16 @@ extension BusinessListViewController: UIPickerViewDelegate, UIPickerViewDataSour
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == self.searchByPickerView {
-            return SearchType.allCases[row].rawValue
+            return self.viewModel.searchTypes[row].rawValue
         } else {
-            return FilterType.allCases[row].rawValue
+            return self.viewModel.filterTypes[row].rawValue
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == self.searchByPickerView {
-            self.searchByTextField.text = "Search by: \(SearchType.allCases[row].rawValue) "
-            self.viewModel.setSearchCategory(category: SearchType.allCases[row])
+            self.searchByTextField.text = "Search by: \(self.viewModel.searchTypes[row].rawValue) "
+            self.viewModel.setSearchCategory(category: self.viewModel.searchTypes[row])
         }
     }
 }

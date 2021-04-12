@@ -8,36 +8,40 @@
 import Foundation
 
 struct BusinessReviewsData: Codable {
-    let reviews: [Review]
-    let total: Int
-    let possibleLanguages: [String]
+    let reviews: [Review]?
+    let total: Int?
+    let possibleLanguages: [String]?
 
     enum CodingKeys: String, CodingKey {
-        case reviews, total
+        case reviews
+        case total
         case possibleLanguages = "possible_languages"
     }
 }
 
 struct Review: Codable {
-    let id: String
-    let url: String
-    let text: String
-    let rating: Int
-    let timeCreated: String
-    let user: User
+    let id: String?
+    let url: String?
+    let text: String?
+    let rating: Int?
+    let timeCreated: String?
+    let user: User?
 
     enum CodingKeys: String, CodingKey {
-        case id, url, text, rating
+        case id
+        case url
+        case text
+        case rating
         case timeCreated = "time_created"
         case user
     }
 }
 
 struct User: Codable {
-    let id: String
-    let profileURL: String
-    let imageURL: String
-    let name: String
+    let id: String?
+    let profileURL: String?
+    let imageURL: String?
+    let name: String?
 
     enum CodingKeys: String, CodingKey {
         case id

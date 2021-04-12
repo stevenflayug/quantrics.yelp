@@ -9,8 +9,11 @@ import Foundation
 import UIKit
 
 public extension UIColor {
-    convenience init(hexString: String, alpha: CGFloat = 1.0) {
-        let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    static let primaryColor = UIColor(hex: "#d32323")
+    static let backgroundColor = UIColor(hex: "0xEEEEEE")
+    
+    convenience init(hex: String, alpha: CGFloat? = 1.0) {
+        let hexString: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
         if (hexString.hasPrefix("#")) {
             scanner.scanLocation = 1
@@ -24,7 +27,7 @@ public extension UIColor {
         let red   = CGFloat(r) / 255.0
         let green = CGFloat(g) / 255.0
         let blue  = CGFloat(b) / 255.0
-        self.init(red:red, green:green, blue:blue, alpha:alpha)
+        self.init(red:red, green:green, blue:blue, alpha:alpha ?? 1.0)
     }
     func toHexString() -> String {
         var r:CGFloat = 0

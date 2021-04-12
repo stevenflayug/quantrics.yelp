@@ -13,10 +13,12 @@
                 <outlet property="dealsButton" destination="ww7-MK-8ih" id="4Qr-jr-Gfd"/>
                 <outlet property="dealsTitleLabel" destination="XUj-Mf-Sw5" id="BfG-lw-cQt"/>
                 <outlet property="detailsScrollView" destination="vPL-Zw-Ph2" id="FAT-N9-5eK"/>
+                <outlet property="firstSeparatorView" destination="r6O-Eq-TA1" id="FAP-U1-UEh"/>
                 <outlet property="imageView" destination="XFC-I1-fFk" id="ihL-bl-VKD"/>
                 <outlet property="infoStackView" destination="Nd7-0w-Hlr" id="keN-ty-wIx"/>
                 <outlet property="reviewsStackView" destination="hoC-ch-BWc" id="ERQ-1L-CPl"/>
                 <outlet property="reviewsTitleLabel" destination="rh7-Nc-Ug6" id="j05-Jl-aCq"/>
+                <outlet property="secondSeparatorView" destination="uAn-ej-Uaq" id="Rh6-gz-zUQ"/>
                 <outlet property="titleLabel" destination="oWB-W8-kxX" id="QV0-Y6-lM5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -39,13 +41,16 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWB-W8-kxX">
-                                    <rect key="frame" x="10" y="165" width="394" height="20.5"/>
+                                    <rect key="frame" x="10" y="165" width="394" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="UqQ-cB-H1m"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nd7-0w-Hlr" customClass="uiv">
-                                    <rect key="frame" x="10" y="190.5" width="394" height="0.0"/>
+                                    <rect key="frame" x="10" y="190" width="394" height="0.0"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qq1-Yi-dmz">
                                             <rect key="frame" x="0.0" y="0.0" width="394" height="0.0"/>
@@ -57,7 +62,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hoC-ch-BWc" customClass="uiv">
-                                    <rect key="frame" x="10" y="222" width="394" height="0.0"/>
+                                    <rect key="frame" x="10" y="221" width="394" height="0.0"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mKt-jX-lPA">
                                             <rect key="frame" x="0.0" y="0.0" width="394" height="0.0"/>
@@ -69,8 +74,9 @@
                                     </subviews>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUj-Mf-Sw5">
-                                    <rect key="frame" x="10" y="228" width="394" height="30"/>
+                                    <rect key="frame" x="10" y="227" width="394" height="30"/>
                                     <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="78h-LZ-nVn"/>
                                         <constraint firstAttribute="height" constant="30" id="p5u-6t-OPh"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -78,28 +84,30 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ww7-MK-8ih">
-                                    <rect key="frame" x="157" y="263" width="100" height="30"/>
+                                    <rect key="frame" x="157" y="262" width="100" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="6sZ-Pq-Idr"/>
                                         <constraint firstAttribute="width" constant="100" id="awV-Wc-fAY"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rh7-Nc-Ug6">
-                                    <rect key="frame" x="10" y="196.5" width="394" height="20.5"/>
+                                    <rect key="frame" x="10" y="196" width="394" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="O1v-5J-RRg"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r6O-Eq-TA1">
-                                    <rect key="frame" x="0.0" y="193" width="414" height="1"/>
+                                    <rect key="frame" x="0.0" y="192.5" width="414" height="1"/>
                                     <color key="backgroundColor" red="0.93332451579999998" green="0.9333273768" blue="0.93333357569999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="j5h-oE-2T0"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAn-ej-Uaq">
-                                    <rect key="frame" x="0.0" y="224.5" width="414" height="1"/>
+                                    <rect key="frame" x="0.0" y="223.5" width="414" height="1"/>
                                     <color key="backgroundColor" red="0.94549435380000002" green="0.94565302129999995" blue="0.94547218079999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="Z8B-nX-Mtc"/>

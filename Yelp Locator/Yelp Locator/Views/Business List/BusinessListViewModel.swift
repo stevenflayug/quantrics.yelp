@@ -12,6 +12,9 @@ import RxCocoa
 class BusinessListViewModel {
     private let router = BusinessRouter()
     
+    let searchTypes = SearchType.allCases
+    let filterTypes = FilterType.allCases
+        
     let searchTextValue: BehaviorRelay<String> = BehaviorRelay(value: "")
     let businessList: BehaviorRelay<[Business]> = BehaviorRelay(value: [])
     let businessListContainer: BehaviorRelay<[Business]> = BehaviorRelay(value: [])
@@ -54,7 +57,13 @@ class BusinessListViewModel {
                 _self.errorMessage.accept(error ?? "")
                 return
             }
-            _self.businessListContainer.accept(data?.businesses ?? [])
+            
+            // Had to sort manually when filtering by Rating since API sometimes returns inconsistent lists
+            if filterBy == .rating {
+                _self.businessListContainer.accept(data?.businesses?.sorted(by: { $0.rating ?? 0.0 > $1.rating ?? 0.0 }) ?? [])
+            } else {
+                _self.businessListContainer.accept(data?.businesses ?? [])
+            }
             _self.searchBusinesses(searchText: _self.searchTextValue.value)
         }
     }
@@ -63,7 +72,7 @@ class BusinessListViewModel {
         var filteredList: [Business] = []
         switch self.searchCategory {
         case .name:
-            filteredList = self.businessListContainer.value.filter({$0.name.lowercased().contains(searchText.lowercased())})
+            filteredList = self.businessListContainer.value.filter({($0.name?.lowercased().contains(searchText.lowercased()) ?? false)})
         case .address:
             filteredList = self.businessListContainer.value.filter({$0.completeAddress.lowercased().contains(searchText.lowercased())})
         default:

@@ -19,7 +19,12 @@ class BusinessDetailView: UIView {
         case .categories:
             self.valueLabel.text = business.completeCategory
         case .hoursOfOperation:
-            self.valueLabel.text = "\(business.hours?.first?.hourOpen?.first?.start ?? "") to \(business.hours?.first?.hourOpen?.first?.end ?? "")"
+            if let start = business.hours?.first?.hourOpen?.first?.start, start != "",
+               let end = business.hours?.first?.hourOpen?.first?.end, end != "" {
+                self.valueLabel.text = "\(business.hours?.first?.hourOpen?.first?.start ?? "") to \(business.hours?.first?.hourOpen?.first?.end ?? "")"
+            } else {
+                self.valueLabel.text = "None Provided"
+            }
         case .address:
             self.valueLabel.text = business.completeAddress
         case .contactNo:
@@ -28,8 +33,8 @@ class BusinessDetailView: UIView {
     }
     
     func setupViews() {
-        self.titleLabel.font = UIFont(name: "Roboto-Regular", size: 15.0)
-        self.titleLabel.textColor = UIColor(hexString: "#d32323")
+        self.titleLabel.font = UIFont(name: "Roboto-Bold", size: 15.0)
+        self.titleLabel.textColor = UIColor.primaryColor
         
         self.valueLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
         self.valueLabel.numberOfLines = 0

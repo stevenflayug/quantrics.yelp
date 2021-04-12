@@ -8,11 +8,15 @@
 import Foundation
 
 struct BusinessDetailsData: Codable {
-    let id, alias, name: String?
+    let id: String?
+    let alias: String?
+    let name: String?
     let imageURL: String?
-    let isClaimed, isClosed: Bool?
+    let isClaimed: Bool?
+    let isClosed: Bool?
     let url: String?
-    let phone, displayPhone: String?
+    let phone: String?
+    let displayPhone: String?
     let reviewCount: Int?
     let categories: [Category]?
     let rating: Double?
@@ -41,16 +45,25 @@ struct BusinessDetailsData: Codable {
         self.hours = []
         self.transactions = []
     }
-
+    
     enum CodingKeys: String, CodingKey {
-        case id, alias, name
+        case id
+        case alias
+        case name
         case imageURL = "image_url"
         case isClaimed = "is_claimed"
         case isClosed = "is_closed"
-        case url, phone
+        case url
+        case phone
         case displayPhone = "display_phone"
         case reviewCount = "review_count"
-        case categories, rating, location, coordinates, photos, hours, transactions
+        case categories
+        case rating
+        case location
+        case coordinates
+        case photos
+        case hours
+        case transactions
     }
     
     var completeAddress: String {
@@ -64,7 +77,7 @@ struct BusinessDetailsData: Codable {
     var completeCategory: String {
         var completeCategory = ""
         self.categories?.forEach {
-            completeCategory += completeCategory == "" ?  "\($0.title)" : ", \($0.title)"
+            completeCategory += completeCategory == "" ?  "\($0.title ?? "")" : ", \($0.title ?? "")"
         }
         return completeCategory
     }
@@ -83,7 +96,7 @@ struct Hour: Codable {
     let hourOpen: [Open]?
     let hoursType: String?
     let isOpenNow: Bool?
-
+    
     enum CodingKeys: String, CodingKey {
         case hourOpen = "open"
         case hoursType = "hours_type"
@@ -93,9 +106,10 @@ struct Hour: Codable {
 
 struct Open: Codable {
     let isOvernight: Bool?
-    let start, end: String?
+    let start: String?
+    let end: String?
     let day: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case isOvernight = "is_overnight"
         case start, end, day
@@ -119,9 +133,12 @@ struct DetailLocation: Codable {
         self.displayAddress = []
         self.crossStreets = ""
     }
-
+    
     enum CodingKeys: String, CodingKey {
-        case address1, address2, address3, city
+        case address1
+        case address2
+        case address3
+        case city
         case zipCode = "zip_code"
         case country, state
         case displayAddress = "display_address"

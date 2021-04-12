@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import PKHUD
 
 class BusinessDetailsViewController: UIViewController {
     @IBOutlet weak var detailsScrollView: UIScrollView!
@@ -18,6 +19,8 @@ class BusinessDetailsViewController: UIViewController {
     @IBOutlet weak var reviewsStackView: UIStackView!
     @IBOutlet weak var dealsTitleLabel: UILabel!
     @IBOutlet weak var dealsButton: UIButton!
+    @IBOutlet weak var firstSeparatorView: UIView!
+    @IBOutlet weak var secondSeparatorView: UIView!
     
     private var viewModel = BusinessDetailsViewModel(businessId: "")
     private let disposeBag = DisposeBag()
@@ -38,6 +41,8 @@ class BusinessDetailsViewController: UIViewController {
         self.setupNavigationBar()
         self.setupViews()
         self.setupObservables()
+        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
+        self.viewModel.startBusinessDetailsRequest()
         self.viewModel.startBusinessReviewsRequest()
     }
     
@@ -48,40 +53,12 @@ class BusinessDetailsViewController: UIViewController {
         _navigationController.navigationBar.tintColor = .white
         _navigationController.navigationBar.isHidden = false
         _navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        _navigationController.setStatusBar(backgroundColor: UIColor(hexString: "#d32323"))
-        _navigationController.navigationBar.backgroundColor = UIColor(hexString: "#d32323")
+        _navigationController.setStatusBar(backgroundColor: .primaryColor)
+        _navigationController.navigationBar.backgroundColor = .primaryColor
         _navigationController.navigationBar.isTranslucent = true
-        
-//        let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-//        let filterDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(filterDoneTapped))
-//
-//        let filterToolBar = UIToolbar()
-//        filterToolBar.barStyle = UIBarStyle.default
-//        filterToolBar.isTranslucent = true
-//        filterToolBar.tintColor = UIColor.systemBlue
-//        filterToolBar.sizeToFit()
-//        filterToolBar.setItems([padding, filterDoneButton], animated: false)
-//        filterToolBar.isUserInteractionEnabled = true
-//
-//        let filterItem = UITextField()
-//        filterItem.delegate = self
-//        filterItem.tintColor = .clear
-//        filterItem.borderStyle = .none
-//        filterItem.backgroundColor = .clear
-//        filterItem.leftViewMode = .always
-//        filterItem.leftView = UIImageView(image: UIImage(named: "filter")?.resizeImage(20.0))
-//        filterItem.inputView = self.filterPickerView
-//        filterItem.inputAccessoryView = filterToolBar
-//
-//        self.filterPickerView.delegate = self
-//        self.filterPickerView.dataSource = self
-//
-//        filterBarButton = UIBarButtonItem(customView: filterItem)
-//        self.navigationItem.rightBarButtonItem = self.filterBarButton
     }
     
     func setupViews() {
-
         self.infoStackView.spacing = 0.0
         self.infoStackView.layer.cornerRadius = 8.0
         self.infoStackView.distribution = .fillProportionally
@@ -93,55 +70,79 @@ class BusinessDetailsViewController: UIViewController {
         self.reviewsStackView.clipsToBounds = true
         
         self.titleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
-        self.titleLabel.textColor = UIColor(hexString: "#d32323")
+        self.titleLabel.textColor = .primaryColor
+        self.titleLabel.text = ""
         
-        self.reviewsTitleLabel.text = "Reviews"
+        self.reviewsTitleLabel.text = ""
         self.reviewsTitleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
-        self.reviewsTitleLabel.textColor = UIColor(hexString: "#d32323")
+        self.reviewsTitleLabel.textColor = .primaryColor
         
-        self.dealsTitleLabel.text = "Deals"
+        self.dealsTitleLabel.text = ""
         self.dealsTitleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
-        self.dealsTitleLabel.textColor = UIColor(hexString: "#d32323")
+        self.dealsTitleLabel.textColor = .primaryColor
         
+        self.dealsButton.isHidden = true
         self.dealsButton.setTitle(" See Deals ", for: .normal)
         self.dealsButton.setTitleColor(.white, for: .normal)
         self.dealsButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 15.0)
-        self.dealsButton.backgroundColor = UIColor(hexString: "#d32323")
+        self.dealsButton.backgroundColor = .primaryColor
         self.dealsButton.layer.cornerRadius = 5.0
+        self.dealsButton.addTarget(self, action: #selector(self.dealsButtonTapped), for: .touchUpInside)
+        
+        self.firstSeparatorView.isHidden = true
+        self.secondSeparatorView.isHidden = true
     }
     
     private func setupObservables() {
-        self.viewModel.businessDetails.asObservable().subscribe(onNext: { [weak self] in
+        self.observeServices().subscribe(onNext: { [weak self] loadViews in
             guard let _self = self else { return }
-            if $0.name != "" {
-                _self.setupHeader(info: $0)
-                _self.setupDetails(details: $0)
+            if loadViews {
+                _self.setupReviews(reviews: _self.viewModel.businessReviews.value)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    _self.setupHeader(info: _self.viewModel.businessDetails.value)
+                    _self.setupDetails(details: _self.viewModel.businessDetails.value)
+                }
+                HUD.hide(animated: true)
             }
         }).disposed(by: disposeBag)
-        
-        self.viewModel.businessReviews.asObservable().subscribe(onNext: { [weak self] in
-            guard let _self = self else { return }
-            _self.setupReviews(reviews: $0)
-        }).disposed(by: disposeBag)
+    }
+    
+    private func observeServices() -> Observable<Bool> {
+        return Observable.combineLatest(viewModel.detailsServiceDone, viewModel.reviewsServiceDone)
+        { (detailsDone, reviewsDone) in
+            return detailsDone && reviewsDone
+        }
     }
     
     private func setupHeader(info: BusinessDetailsData) {
         self.titleLabel.text = info.name
         
-        if let imageUrl = URL(string: info.imageURL ?? "") {
+        if let imageUrl = URL(string: info.imageURL ?? ""), info.imageURL != "" {
             self.viewModel.getData(from: imageUrl) { data, response, error in
-                guard let data = data, error == nil else { return }
+                guard let data = data, error == nil else {
+                    self.imageView.image = UIImage(named: "yelpIcon")
+                    return
+                }
                 DispatchQueue.main.async() { [weak self] in
                     guard let _self = self else { return }
                     _self.imageView.image = UIImage(data: data)?.withRoundedCorners(radius: 15.0)
                 }
             }
+        } else {
+            self.imageView.image = UIImage(named: "yelpIcon")
         }
     }
     
     private func setupDetails(details: BusinessDetailsData) {
-        DetailItem.allCases.forEach { [weak self] in
+        self.viewModel.detailItems.forEach { [weak self] in
             guard let _self = self else { return }
+            
+            _self.reviewsTitleLabel.text = "Reviews"
+            _self.dealsTitleLabel.text = "Deals"
+            _self.firstSeparatorView.isHidden = false
+            _self.secondSeparatorView.isHidden = false
+            _self.dealsButton.isHidden = false
+            
             let detailView: BusinessDetailView = .fromNib()
             detailView.setupDetailItem(detailItem: $0, business: details)
             _self.infoStackView.addArrangedSubview(detailView)
@@ -155,16 +156,26 @@ class BusinessDetailsViewController: UIViewController {
             reviewView.setupReviewItem(reviewItem: $0)
             _self.reviewsStackView.addArrangedSubview(reviewView)
             
-            if let imageUrl = URL(string: $0.user.imageURL) {
+            if let imageUrl = URL(string: $0.user?.imageURL ?? "") {
                 _self.viewModel.getData(from: imageUrl) { data, response, error in
-                    guard let data = data, error == nil else { return }
+                    guard let data = data, error == nil else {
+                        reviewView.setUserImage(image: UIImage(named: "imagePlaceholder") ?? UIImage())
+                        return
+                    }
                     DispatchQueue.main.async() { [weak self] in
                         guard let _ = self else { return }
                         reviewView.setUserImage(image: UIImage(data: data) ?? UIImage())
                     }
                 }
+            }  else {
+                reviewView.setUserImage(image: UIImage(named: "imagePlaceholder") ?? UIImage())
             }
         }
+    }
+    
+    @objc private func dealsButtonTapped() {
+        guard let url = URL(string: self.viewModel.businessDetails.value.url ?? "") else { return }
+        UIApplication.shared.open(url)
     }
 }
 
