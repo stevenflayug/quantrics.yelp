@@ -32,11 +32,11 @@ class BusinessDetailView: UIView {
         }
     }
     
-    func setupViews() {
-        self.titleLabel.font = UIFont(name: "Roboto-Bold", size: 15.0)
+    private func setupViews() {
+        self.titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15.0)
         self.titleLabel.textColor = UIColor.primaryColor
         
-        self.valueLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
+        self.valueLabel.font = UIFont(name: "Montserrat", size: 13.0)
         self.valueLabel.numberOfLines = 0
     }
 }

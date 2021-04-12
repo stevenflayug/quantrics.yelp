@@ -17,24 +17,28 @@ class BusinessListViewController: UIViewController {
     
     @IBOutlet weak var businessListTableview: UITableView!
     
+    private var refreshControl = UIRefreshControl()
     private var filterBarButton = UIBarButtonItem()
     private var searchByPickerView = UIPickerView()
     private var filterPickerView = UIPickerView()
-    
+
     private let viewModel = BusinessListViewModel()
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         HUD.dimsBackground = false
-        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
-        
         self.setupNavigationBar()
-        self.setupViews()
         self.setupTableView()
+        self.setupViews()
         self.setupObservables()
         self.bindValues()
-        self.setupActions()
-        self.viewModel.startBusinessListRequest(filterBy: .none)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !self.viewModel.initialLoadDone {
+            HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
+            self.viewModel.startBusinessListRequest(filterBy: .none)
+        }
     }
 
     private func setupNavigationBar() {
@@ -88,6 +92,10 @@ class BusinessListViewController: UIViewController {
         
         businessListTableview.layer.cornerRadius = 8.0
         
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(reloadBusinessList), for: .valueChanged)
+        self.businessListTableview.addSubview(refreshControl)
+        
         // Register Cell
         self.businessListTableview.register(UINib(nibName: "BusinessListCell", bundle: .main), forCellReuseIdentifier: "businessListCell")
     }
@@ -96,7 +104,7 @@ class BusinessListViewController: UIViewController {
         self.searchByTextField.delegate = self
         self.searchByTextField.borderStyle = .none
         self.searchByTextField.text = "Search by: \(self.viewModel.searchCategory.rawValue) "
-        self.searchByTextField.font = UIFont(name: "Roboto-Regular", size: 13.0)
+        self.searchByTextField.font = UIFont(name: "Montserrat", size: 13.0)
         self.searchByTextField.backgroundColor = .clear
         self.searchByTextField.rightViewMode = .always
         self.searchByTextField.rightView = UIImageView(image: UIImage(named: "dropDown")?.resizeImage(15.0))
@@ -120,12 +128,6 @@ class BusinessListViewController: UIViewController {
         self.searchByTextField.inputAccessoryView = searchToolBar
     }
     
-    private func setupActions() {
-//        backButton.rx.tap.bind { [weak self] in
-//            self?.navigationController?.popViewController(animated: true)
-//        }.disposed(by: disposeBag)
-    }
-    
     private func setupObservables() {
         self.viewModel.businessList.asObservable().bind(to: businessListTableview.rx.items(cellIdentifier: "businessListCell", cellType: BusinessListCell.self)) {
             index, item, cell in
@@ -137,6 +139,7 @@ class BusinessListViewController: UIViewController {
             HUD.hide(animated: true)
             _self.businessListTableview.reloadData()
             _self.businessListTableview.reloadInputViews()
+            _self.refreshControl.endRefreshing()
         }).disposed(by: disposeBag)
         
         self.businessListTableview.rx.itemSelected.subscribe(onNext: { [weak self] (indexPath) in
@@ -176,6 +179,10 @@ class BusinessListViewController: UIViewController {
             self.viewModel.setFilterType(filterType: self.viewModel.filterTypes[self.filterPickerView.selectedRow(inComponent: 0)])
         }
         self.filterBarButton.customView?.resignFirstResponder()
+    }
+    
+    @objc func reloadBusinessList() {
+        self.viewModel.startBusinessListRequest(filterBy: self.viewModel.filterTypes[self.filterPickerView.selectedRow(inComponent: 0)])
     }
 }
 

@@ -19,12 +19,14 @@ class BusinessListViewModel {
     let businessList: BehaviorRelay<[Business]> = BehaviorRelay(value: [])
     let businessListContainer: BehaviorRelay<[Business]> = BehaviorRelay(value: [])
     let errorMessage: BehaviorRelay<String> = BehaviorRelay(value: "")
-    let disposeBag = DisposeBag()
+    
+    var initialLoadDone = false
     var searchCategory: SearchType = .name
+    var filterType: FilterType = .none
+    
+    private let disposeBag = DisposeBag()
 
     func setupObservables() {
-        self.startBusinessListRequest(filterBy: .none)
-        
         self.searchTextValue.asObservable().subscribe(onNext: { [weak self] in
             guard let _self = self else { return }
             _self.searchBusinesses(searchText: $0)
@@ -40,16 +42,19 @@ class BusinessListViewModel {
     }
     
     func startBusinessListRequest(filterBy: FilterType) {
-        var requestParameters = BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639)
+        let longitude = UserDefaults.standard.double(forKey: "longitude")
+        let latitude = UserDefaults.standard.double(forKey: "latitude")
         
-            switch filterBy {
-            case .distance:
-                requestParameters = BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639, distance: true)
-            case .rating:
-                requestParameters = BusinessRequestOptions(longitude: 121.14007076052972, latitude: 14.567405147003639, rating: true)
-            default:
-                break
-            }
+        var requestParameters = BusinessRequestOptions(longitude: longitude, latitude: latitude)
+        
+        switch filterBy {
+        case .distance:
+            requestParameters = BusinessRequestOptions(longitude: longitude, latitude: latitude, distance: true)
+        case .rating:
+            requestParameters = BusinessRequestOptions(longitude: longitude, latitude: latitude, rating: true)
+        default:
+            break
+        }
         
         self.router.startBusinessListRequest(options: requestParameters) { [weak self] (data, error) in
             guard let _self = self else { return }
@@ -65,6 +70,7 @@ class BusinessListViewModel {
                 _self.businessListContainer.accept(data?.businesses ?? [])
             }
             _self.searchBusinesses(searchText: _self.searchTextValue.value)
+            _self.initialLoadDone = true
         }
     }
     

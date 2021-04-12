@@ -69,22 +69,22 @@ class BusinessDetailsViewController: UIViewController {
         self.reviewsStackView.distribution = .fillProportionally
         self.reviewsStackView.clipsToBounds = true
         
-        self.titleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
+        self.titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 20.0)
         self.titleLabel.textColor = .primaryColor
         self.titleLabel.text = ""
         
         self.reviewsTitleLabel.text = ""
-        self.reviewsTitleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
+        self.reviewsTitleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 20.0)
         self.reviewsTitleLabel.textColor = .primaryColor
         
         self.dealsTitleLabel.text = ""
-        self.dealsTitleLabel.font = UIFont(name: "Roboto-Regular", size: 20.0)
+        self.dealsTitleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 20.0)
         self.dealsTitleLabel.textColor = .primaryColor
         
         self.dealsButton.isHidden = true
         self.dealsButton.setTitle(" See Deals ", for: .normal)
         self.dealsButton.setTitleColor(.white, for: .normal)
-        self.dealsButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 15.0)
+        self.dealsButton.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 15.0)
         self.dealsButton.backgroundColor = .primaryColor
         self.dealsButton.layer.cornerRadius = 5.0
         self.dealsButton.addTarget(self, action: #selector(self.dealsButtonTapped), for: .touchUpInside)

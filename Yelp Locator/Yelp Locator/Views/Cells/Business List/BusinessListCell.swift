@@ -28,12 +28,12 @@ class BusinessListCell: UITableViewCell {
     }
     
     private func setupUI() {
-        self.nameLabel.font = UIFont(name: "Roboto-Regular", size: 15.0)
+        self.nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
         self.nameLabel.textColor = .primaryColor
-        self.addressLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
+        self.addressLabel.font = UIFont(name: "Montserrat", size: 13.0)
         self.addressLabel.numberOfLines = 0
-        self.typeLabel.font = UIFont(name: "Roboto-Light", size: 13.0)
-        self.distanceLabel.font = UIFont(name: "Roboto-Regular", size: 10.0)
+        self.typeLabel.font = UIFont(name: "Montserrat", size: 13.0)
+        self.distanceLabel.font = UIFont(name: "Montserrat", size: 10.0)
         self.actionImageView.image = UIImage(named: "chevronRight")?.resizeImage(5.0).withTintColor(.backgroundColor)
         self.actionImageView.contentMode = .scaleAspectFit
     }

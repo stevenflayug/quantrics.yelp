@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LandingScreenViewController" customModule="Yelp_Locator" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundImageView" destination="VZs-OZ-sxf" id="p9d-1t-a2r"/>
+                <outlet property="brandImageViiew" destination="ikX-Uj-Ezi" id="ezy-iD-rKh"/>
+                <outlet property="startButton" destination="fPk-uN-g0c" id="UbH-Om-q9h"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VZs-OZ-sxf">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ikX-Uj-Ezi">
+                    <rect key="frame" x="87" y="164" width="240" height="110"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="110" id="5EX-JP-puW"/>
+                        <constraint firstAttribute="width" constant="240" id="OVc-eE-6ur"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPk-uN-g0c">
+                    <rect key="frame" x="184" y="455" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fPk-uN-g0c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Cgc-ge-18X"/>
+                <constraint firstAttribute="bottom" secondItem="VZs-OZ-sxf" secondAttribute="bottom" id="JHu-dd-7R2"/>
+                <constraint firstItem="VZs-OZ-sxf" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="M7s-Qm-d5G"/>
+                <constraint firstItem="VZs-OZ-sxf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="RDq-3v-fhO"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fPk-uN-g0c" secondAttribute="trailing" constant="20" id="S53-yp-2NB"/>
+                <constraint firstItem="fPk-uN-g0c" firstAttribute="centerX" secondItem="VZs-OZ-sxf" secondAttribute="centerX" id="UAt-B2-2pK"/>
+                <constraint firstItem="ikX-Uj-Ezi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="120" id="bBM-EQ-9WA"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VZs-OZ-sxf" secondAttribute="trailing" id="pTD-Cv-7BD"/>
+                <constraint firstItem="ikX-Uj-Ezi" firstAttribute="centerX" secondItem="VZs-OZ-sxf" secondAttribute="centerX" id="yFv-hR-CEw"/>
+                <constraint firstItem="fPk-uN-g0c" firstAttribute="centerY" secondItem="VZs-OZ-sxf" secondAttribute="centerY" id="zYN-bM-W7i"/>
+            </constraints>
+            <point key="canvasLocation" x="133" y="94"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

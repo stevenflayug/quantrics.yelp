@@ -36,13 +36,15 @@
 		F06F8211261F71A900E7A392 /* BusinessListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F820E261F71A900E7A392 /* BusinessListCell.swift */; };
 		F06F8212261F71A900E7A392 /* BusinessListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06F820F261F71A900E7A392 /* BusinessListCell.xib */; };
 		F06F8213261F71A900E7A392 /* BusinessListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F8210261F71A900E7A392 /* BusinessListCellViewModel.swift */; };
-		F0AD16872620426F004BB442 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0AD16842620426E004BB442 /* Roboto-Bold.ttf */; };
-		F0AD16882620426F004BB442 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0AD16852620426F004BB442 /* Roboto-Regular.ttf */; };
-		F0AD16892620426F004BB442 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0AD16862620426F004BB442 /* Roboto-Light.ttf */; };
 		F0AD168E26204A04004BB442 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD168D26204A04004BB442 /* UIColor+Extensions.swift */; };
 		F0AD16A926205026004BB442 /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD16A826205026004BB442 /* CALayer+Extensions.swift */; };
 		F0AD16AC26205800004BB442 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD16AB26205800004BB442 /* UINavigationController+Extensions.swift */; };
 		F0AD16AF26206E9D004BB442 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD16AE26206E9D004BB442 /* UIImage+Extensions.swift */; };
+		F0FDEBC22624AC32007A588A /* LandingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FDEBC02624AC32007A588A /* LandingScreenViewController.swift */; };
+		F0FDEBC32624AC32007A588A /* LandingScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0FDEBC12624AC32007A588A /* LandingScreenViewController.xib */; };
+		F0FDEBC82624B15E007A588A /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0FDEBC62624B15E007A588A /* Montserrat-SemiBold.ttf */; };
+		F0FDEBC92624B15E007A588A /* Montserrat.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0FDEBC72624B15E007A588A /* Montserrat.ttf */; };
+		F0FDEBCD2624BCC3007A588A /* LandingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FDEBCC2624BCC3007A588A /* LandingScreenViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,13 +80,15 @@
 		F06F820E261F71A900E7A392 /* BusinessListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessListCell.swift; sourceTree = "<group>"; };
 		F06F820F261F71A900E7A392 /* BusinessListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessListCell.xib; sourceTree = "<group>"; };
 		F06F8210261F71A900E7A392 /* BusinessListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessListCellViewModel.swift; sourceTree = "<group>"; };
-		F0AD16842620426E004BB442 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
-		F0AD16852620426F004BB442 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
-		F0AD16862620426F004BB442 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		F0AD168D26204A04004BB442 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		F0AD16A826205026004BB442 /* CALayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		F0AD16AB26205800004BB442 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		F0AD16AE26206E9D004BB442 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		F0FDEBC02624AC32007A588A /* LandingScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreenViewController.swift; sourceTree = "<group>"; };
+		F0FDEBC12624AC32007A588A /* LandingScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LandingScreenViewController.xib; sourceTree = "<group>"; };
+		F0FDEBC62624B15E007A588A /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		F0FDEBC72624B15E007A588A /* Montserrat.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Montserrat.ttf; sourceTree = "<group>"; };
+		F0FDEBCC2624BCC3007A588A /* LandingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreenViewModel.swift; sourceTree = "<group>"; };
 		F9DCB972733E639519E7A942 /* Pods-Yelp Locator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yelp Locator.debug.xcconfig"; path = "Target Support Files/Pods-Yelp Locator/Pods-Yelp Locator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,6 +235,7 @@
 		F06F81E9261F707900E7A392 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F0FDEBBF2624ABF6007A588A /* Landing View */,
 				F0291DFD262224ED00B27585 /* Business Details */,
 				F06F820D261F719900E7A392 /* Cells */,
 				F0291DFB262224E000B27585 /* Business List */,
@@ -280,9 +285,8 @@
 		F0AD16832620424F004BB442 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				F0AD16842620426E004BB442 /* Roboto-Bold.ttf */,
-				F0AD16862620426F004BB442 /* Roboto-Light.ttf */,
-				F0AD16852620426F004BB442 /* Roboto-Regular.ttf */,
+				F0FDEBC62624B15E007A588A /* Montserrat-SemiBold.ttf */,
+				F0FDEBC72624B15E007A588A /* Montserrat.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -296,6 +300,16 @@
 				F0AD16AE26206E9D004BB442 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F0FDEBBF2624ABF6007A588A /* Landing View */ = {
+			isa = PBXGroup;
+			children = (
+				F0FDEBC02624AC32007A588A /* LandingScreenViewController.swift */,
+				F0FDEBCC2624BCC3007A588A /* LandingScreenViewModel.swift */,
+				F0FDEBC12624AC32007A588A /* LandingScreenViewController.xib */,
+			);
+			path = "Landing View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,14 +372,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F06F81D5261F6D9900E7A392 /* LaunchScreen.storyboard in Resources */,
-				F0AD16882620426F004BB442 /* Roboto-Regular.ttf in Resources */,
+				F0FDEBC82624B15E007A588A /* Montserrat-SemiBold.ttf in Resources */,
 				F06F81D2261F6D9900E7A392 /* Assets.xcassets in Resources */,
 				F0291E3C26231B7D00B27585 /* BusinessReviewView.xib in Resources */,
-				F0AD16872620426F004BB442 /* Roboto-Bold.ttf in Resources */,
+				F0FDEBC32624AC32007A588A /* LandingScreenViewController.xib in Resources */,
 				F06F81EE261F709400E7A392 /* BusinessListViewController.xib in Resources */,
 				F06F8212261F71A900E7A392 /* BusinessListCell.xib in Resources */,
-				F0AD16892620426F004BB442 /* Roboto-Light.ttf in Resources */,
 				F0291E012622250700B27585 /* BusinessDetailsViewController.xib in Resources */,
+				F0FDEBC92624B15E007A588A /* Montserrat.ttf in Resources */,
 				F06F81D0261F6D9700E7A392 /* Main.storyboard in Resources */,
 				F0291E0E2622DEE700B27585 /* BusinessDetailView.xib in Resources */,
 			);
@@ -427,6 +441,7 @@
 				F06F81E5261F703E00E7A392 /* AppDelegate.swift in Sources */,
 				F06F81FB261F70A300E7A392 /* Business.swift in Sources */,
 				F06F81F7261F70A300E7A392 /* BusinessRouter.swift in Sources */,
+				F0FDEBC22624AC32007A588A /* LandingScreenViewController.swift in Sources */,
 				F06F81F8261F70A300E7A392 /* BusinessRequest.swift in Sources */,
 				F0291E1E2622E7A900B27585 /* BusinessDetailsRequestOptions.swift in Sources */,
 				F0291E002622250700B27585 /* BusinessDetailsViewController.swift in Sources */,
@@ -437,6 +452,7 @@
 				F0AD16A926205026004BB442 /* CALayer+Extensions.swift in Sources */,
 				F06F81F0261F709400E7A392 /* BusinessListViewModel.swift in Sources */,
 				F0291E0A2622DED000B27585 /* BusinessDetailView.swift in Sources */,
+				F0FDEBCD2624BCC3007A588A /* LandingScreenViewModel.swift in Sources */,
 				F0AD16AF26206E9D004BB442 /* UIImage+Extensions.swift in Sources */,
 				F0291E052622251800B27585 /* BusinessDetailsViewModel.swift in Sources */,
 				F06F8213261F71A900E7A392 /* BusinessListCellViewModel.swift in Sources */,

@@ -14,8 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        let businessListVC = UINavigationController(rootViewController: BusinessListViewController())
-        window?.rootViewController = businessListVC
+        let landingScreenVC = UINavigationController(rootViewController: LandingScreenViewController())
+        window?.rootViewController = landingScreenVC
         
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.white]
         return true
