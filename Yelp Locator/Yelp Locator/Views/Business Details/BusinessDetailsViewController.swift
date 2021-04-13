@@ -41,13 +41,21 @@ class BusinessDetailsViewController: UIViewController {
         self.setupNavigationBar()
         self.setupViews()
         self.setupObservables()
-        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
         self.viewModel.startBusinessDetailsRequest()
         self.viewModel.startBusinessReviewsRequest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
+    }
+    
     private func setupNavigationBar() {
-        self.title = "Business Details"
+        let titleLabel = UILabel()
+        titleLabel.textColor = UIColor.white
+        titleLabel.font = .primaryFontSemiBold(size: 15)
+        titleLabel.text = "Business Details"
+        titleLabel.frame = CGRect(x: 0, y: 0, width: 60, height: 34)
+        navigationItem.titleView = titleLabel
         
         guard let _navigationController = self.navigationController else { return }
         _navigationController.navigationBar.tintColor = .white
@@ -69,22 +77,22 @@ class BusinessDetailsViewController: UIViewController {
         self.reviewsStackView.distribution = .fillProportionally
         self.reviewsStackView.clipsToBounds = true
         
-        self.titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 20.0)
+        self.titleLabel.font = .primaryFontSemiBold(size: 20)
         self.titleLabel.textColor = .primaryColor
         self.titleLabel.text = ""
         
         self.reviewsTitleLabel.text = ""
-        self.reviewsTitleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 20.0)
+        self.reviewsTitleLabel.font = .primaryFontSemiBold(size: 20)
         self.reviewsTitleLabel.textColor = .primaryColor
         
         self.dealsTitleLabel.text = ""
-        self.dealsTitleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 20.0)
+        self.dealsTitleLabel.font = .primaryFontSemiBold(size: 20)
         self.dealsTitleLabel.textColor = .primaryColor
         
         self.dealsButton.isHidden = true
         self.dealsButton.setTitle(" See Deals ", for: .normal)
         self.dealsButton.setTitleColor(.white, for: .normal)
-        self.dealsButton.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 15.0)
+        self.dealsButton.titleLabel?.font = .primaryFontSemiBold(size: 15)
         self.dealsButton.backgroundColor = .primaryColor
         self.dealsButton.layer.cornerRadius = 5.0
         self.dealsButton.addTarget(self, action: #selector(self.dealsButtonTapped), for: .touchUpInside)
@@ -174,14 +182,10 @@ class BusinessDetailsViewController: UIViewController {
     }
     
     @objc private func dealsButtonTapped() {
-        guard let url = URL(string: self.viewModel.businessDetails.value.url ?? "") else { return }
-        UIApplication.shared.open(url)
-    }
-}
-
-//TODO: Move to extension
-extension UIView {
-    class func fromNib<T: UIView>() -> T {
-        return Bundle(for: T.self).loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
+        if let url = URL(string: self.viewModel.businessDetails.value.url ?? "") {
+            UIApplication.shared.open(url)
+        } else {
+            HUD.flash(.labeledError(title: "Yelp link not provided", subtitle: ""), onView: self.view, delay: 1, completion: nil)
+        }
     }
 }

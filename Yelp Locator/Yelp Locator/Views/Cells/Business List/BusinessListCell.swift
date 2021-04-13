@@ -28,12 +28,13 @@ class BusinessListCell: UITableViewCell {
     }
     
     private func setupUI() {
-        self.nameLabel.font = UIFont(name: "Montserrat", size: 15.0)
+        self.nameLabel.font = .primaryFont(size: 15)
         self.nameLabel.textColor = .primaryColor
-        self.addressLabel.font = UIFont(name: "Montserrat", size: 13.0)
+        self.addressLabel.font = .primaryFont(size: 13)
         self.addressLabel.numberOfLines = 0
-        self.typeLabel.font = UIFont(name: "Montserrat", size: 13.0)
-        self.distanceLabel.font = UIFont(name: "Montserrat", size: 10.0)
+        self.typeLabel.font = .primaryFont(size: 13)
+        self.typeLabel.numberOfLines = 0
+        self.distanceLabel.font = .primaryFontSemiBold(size: 10)
         self.actionImageView.image = UIImage(named: "chevronRight")?.resizeImage(5.0).withTintColor(.backgroundColor)
         self.actionImageView.contentMode = .scaleAspectFit
     }
@@ -42,7 +43,11 @@ class BusinessListCell: UITableViewCell {
         nameLabel.text = business.name
         addressLabel.text = business.completeAddress
         typeLabel.text = business.completeCategory
-        distanceLabel.text = "\(business.distance ?? 0.0) Meters Away"
+        
+        var distanceInKm = business.distance?.convert(from: .meters, to: .kilometers) ?? 0.0
+        distanceInKm = round(100*distanceInKm)/100
+        distanceLabel.text = "\(distanceInKm) km"
+        
         self.setupRatingView(rating: business.rating ?? 1.0)
     }
     

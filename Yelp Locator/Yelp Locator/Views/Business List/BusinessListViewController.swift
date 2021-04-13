@@ -16,6 +16,7 @@ class BusinessListViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var businessListTableview: UITableView!
+    @IBOutlet weak var emptyImageView: UIImageView!
     
     private var refreshControl = UIRefreshControl()
     private var filterBarButton = UIBarButtonItem()
@@ -42,7 +43,15 @@ class BusinessListViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        self.title = "Businesses List"
+        let titleLabel = UILabel()
+        titleLabel.textColor = UIColor.white
+        titleLabel.font = .primaryFontSemiBold(size: 15)
+        titleLabel.text = "Businesses Near Me"
+        titleLabel.frame = CGRect(x: 0, y: 0, width: 60, height: 34)
+        self.navigationItem.titleView = titleLabel
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+        
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.setStatusBar(backgroundColor: .primaryColor)
@@ -51,6 +60,7 @@ class BusinessListViewController: UIViewController {
         
         let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let filterDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(filterDoneTapped))
+        filterDoneButton.tintColor = .primaryColor
 
         let filterToolBar = UIToolbar()
         filterToolBar.barStyle = UIBarStyle.default
@@ -104,12 +114,19 @@ class BusinessListViewController: UIViewController {
         self.searchByTextField.delegate = self
         self.searchByTextField.borderStyle = .none
         self.searchByTextField.text = "Search by: \(self.viewModel.searchCategory.rawValue) "
-        self.searchByTextField.font = UIFont(name: "Montserrat", size: 13.0)
+        self.searchByTextField.font = .primaryFont(size: 13)
         self.searchByTextField.backgroundColor = .clear
         self.searchByTextField.rightViewMode = .always
         self.searchByTextField.rightView = UIImageView(image: UIImage(named: "dropDown")?.resizeImage(15.0))
         self.searchByTextField.inputView = self.searchByPickerView
         self.searchByTextField.tintColor = .clear
+        self.searchByTextField.leftViewMode = .always
+        
+        self.searchTextField.clearButtonMode = .whileEditing
+        self.searchTextField.leftView = UIImageView(image: UIImage(named: "search")?.resizeImage(25.0).withTintColor(.lightGray))
+        self.searchTextField.leftViewMode = .always
+        self.searchTextField.placeholder = "Search Businesses"
+        self.searchTextField.delegate = self
         
         self.searchByPickerView.delegate = self
         self.searchByPickerView.dataSource = self
@@ -121,11 +138,18 @@ class BusinessListViewController: UIViewController {
         searchToolBar.sizeToFit()
 
         let searchDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(searchDoneTapped))
+        searchDoneButton.tintColor = .primaryColor
         let padding = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
 
         searchToolBar.setItems([padding, searchDoneButton], animated: false)
         searchToolBar.isUserInteractionEnabled = true
         self.searchByTextField.inputAccessoryView = searchToolBar
+        
+        self.emptyImageView.image = UIImage(named: "emptyImage")
+        self.emptyImageView.isHidden = false
+        self.emptyImageView.contentMode = .center
+        
+        self.businessListTableview.isHidden = true
     }
     
     private func setupObservables() {
@@ -134,9 +158,18 @@ class BusinessListViewController: UIViewController {
             cell.setupCell(business: item)
         }.disposed(by: disposeBag)
         
-        self.viewModel.businessList.asObservable().subscribe(onNext: { [weak self] (_) in
+        self.viewModel.businessList.asObservable().subscribe(onNext: { [weak self] in
             guard let _self = self else { return }
             HUD.hide(animated: true)
+            
+            if $0.isEmpty {
+                _self.businessListTableview.isHidden = true
+                _self.emptyImageView.isHidden = false
+            } else {
+                _self.businessListTableview.isHidden = false
+                _self.emptyImageView.isHidden = true
+            }
+            
             _self.businessListTableview.reloadData()
             _self.businessListTableview.reloadInputViews()
             _self.refreshControl.endRefreshing()
@@ -156,8 +189,6 @@ class BusinessListViewController: UIViewController {
     }
     
     private func bindValues() {
-        self.viewModel.setupObservables()
-        
         self.searchTextField.rx.text
             .orEmpty
             .bind(to: self.viewModel.searchTextValue)
@@ -168,27 +199,47 @@ class BusinessListViewController: UIViewController {
         if self.searchByPickerView.selectedRow(inComponent: 0) == 0 {
             self.searchByTextField.text = "Search by: \(self.viewModel.searchTypes[0].rawValue) "
         }
+        
+        self.viewModel.clearSearchValue()
+        self.searchTextField.text = ""
+        self.reloadBusinessList()
         self.searchByTextField.resignFirstResponder()
     }
     
     @objc func filterDoneTapped() {
-        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
-        if self.filterPickerView.selectedRow(inComponent: 0) == 0 {
-            self.viewModel.setFilterType(filterType: self.viewModel.filterTypes[0])
-        } else {
-            self.viewModel.setFilterType(filterType: self.viewModel.filterTypes[self.filterPickerView.selectedRow(inComponent: 0)])
+        if self.viewModel.filterTypes[self.filterPickerView.selectedRow(inComponent: 0)] != self.viewModel.filterType {
+            HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
+            
+            if self.filterPickerView.selectedRow(inComponent: 0) == 0 {
+                self.viewModel.setFilterType(filterType: self.viewModel.filterTypes[0])
+            } else {
+                self.viewModel.setFilterType(filterType: self.viewModel.filterTypes[self.filterPickerView.selectedRow(inComponent: 0)])
+            }
         }
+        
         self.filterBarButton.customView?.resignFirstResponder()
     }
     
     @objc func reloadBusinessList() {
+        HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
         self.viewModel.startBusinessListRequest(filterBy: self.viewModel.filterTypes[self.filterPickerView.selectedRow(inComponent: 0)])
     }
 }
 
 extension BusinessListViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return false
+        if textField == self.searchByTextField {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == self.searchTextField {
+            HUD.show(.rotatingImage(UIImage(named: "yelpIcon")?.resizeImage(75.0)), onView: self.view)
+            self.viewModel.startBusinessListRequest(filterBy: self.viewModel.filterType)
+        }
     }
 }
 

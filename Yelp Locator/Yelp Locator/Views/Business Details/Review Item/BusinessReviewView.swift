@@ -31,13 +31,13 @@ class BusinessReviewView: UIView {
     private func setupViews() {
         self.userImageView.layer.cornerRadius = 3.0
         
-        self.userNameLabel.font = UIFont(name: "Montserrat", size: 13.0)
+        self.userNameLabel.font = .primaryFont(size: 13)
         self.userNameLabel.textColor = UIColor.primaryColor
         
-        self.reviewContentLabel.font = UIFont(name: "Montserrat", size: 13.0)
+        self.reviewContentLabel.font = .primaryFont(size: 13)
         self.reviewContentLabel.numberOfLines = 0
         
-        self.dateLabel.font = UIFont(name: "Montserrat-SemiBold", size: 13.0)
+        self.dateLabel.font = .primaryFontSemiBold(size: 13)
         
         self.ratingStackView.spacing = 1.0
         self.ratingStackView.distribution = .fillProportionally
@@ -51,9 +51,5 @@ class BusinessReviewView: UIView {
         }
         
         self.layoutSubviews()
-    }
-    
-    private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
 }

@@ -12,6 +12,9 @@ public struct BusinessRequestOptions {
     var latitude: Double
     var distance: Bool? = nil
     var rating: Bool? = nil
+    var name: String? = nil
+    var address: String? = nil
+    var category: String? = nil
 }
 
 extension BusinessRequestOptions: RequestParameter {
@@ -25,6 +28,14 @@ extension BusinessRequestOptions: RequestParameter {
             parameters["sort_by"] = "distance"
         } else if rating != nil {
             parameters["sort_by"] = "rating"
+        }
+        
+        if name != nil {
+            parameters["term"] = name
+        } else if address != nil {
+            parameters["location"] = address
+        } else if category != nil {
+            parameters["categories"] = category
         }
         
         return parameters

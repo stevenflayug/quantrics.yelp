@@ -11,6 +11,8 @@ class BusinessDetailView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     
+    private var viewModel = BusinessDetailViewModel()
+    
     func setupDetailItem(detailItem: DetailItem, business: BusinessDetailsData) {
         self.setupViews()
         self.titleLabel.text = detailItem.rawValue
@@ -21,7 +23,7 @@ class BusinessDetailView: UIView {
         case .hoursOfOperation:
             if let start = business.hours?.first?.hourOpen?.first?.start, start != "",
                let end = business.hours?.first?.hourOpen?.first?.end, end != "" {
-                self.valueLabel.text = "\(business.hours?.first?.hourOpen?.first?.start ?? "") to \(business.hours?.first?.hourOpen?.first?.end ?? "")"
+                self.valueLabel.text = "\(self.viewModel.formatTime(dateString: business.hours?.first?.hourOpen?.first?.start ?? "")) to \(self.viewModel.formatTime(dateString: business.hours?.first?.hourOpen?.first?.end ?? ""))"
             } else {
                 self.valueLabel.text = "None Provided"
             }
@@ -33,10 +35,10 @@ class BusinessDetailView: UIView {
     }
     
     private func setupViews() {
-        self.titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 15.0)
+        self.titleLabel.font = .primaryFontSemiBold(size: 15)
         self.titleLabel.textColor = UIColor.primaryColor
         
-        self.valueLabel.font = UIFont(name: "Montserrat", size: 13.0)
+        self.valueLabel.font = .primaryFont(size: 13)
         self.valueLabel.numberOfLines = 0
     }
 }

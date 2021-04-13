@@ -21,10 +21,29 @@ class LandingScreenViewController: UIViewController {
     private var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
-        self.setupNavigatorBar()
+        self.setupNavigationBar()
         self.setupViews()
         self.setupObservables()
         self.viewModel.checkLocationServices()
+    }
+    
+    private func setupNavigationBar() {
+        let titleLabel = UILabel()
+        titleLabel.textColor = UIColor.white
+        titleLabel.font = .primaryFontSemiBold(size: 15)
+        titleLabel.text = "Business Locator"
+        titleLabel.frame = CGRect(x: 0, y: 0, width: 60, height: 34)
+        navigationItem.titleView = titleLabel
+
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+        
+        guard let _navigationController = self.navigationController else { return }
+        _navigationController.navigationBar.tintColor = .white
+        _navigationController.navigationBar.isHidden = false
+        _navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        _navigationController.setStatusBar(backgroundColor: .primaryColor)
+        _navigationController.navigationBar.backgroundColor = .primaryColor
+        _navigationController.navigationBar.isTranslucent = true
     }
 
     private func setupViews() {
@@ -36,7 +55,7 @@ class LandingScreenViewController: UIViewController {
         
         self.startButton.layer.cornerRadius = 5.0
         self.startButton.setTitle(" Find Businesses Nearby ", for: .normal)
-        self.startButton.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 15.0)
+        self.startButton.titleLabel?.font = .primaryFontSemiBold(size: 15)
         self.startButton.setTitleColor(.white, for: .normal)
         self.startButton.backgroundColor = .primaryColor
         self.startButton.addTarget(self, action: #selector(navigateToList), for: .touchUpInside)
@@ -56,18 +75,6 @@ class LandingScreenViewController: UIViewController {
                 _self.setupLocationManager()
             }
         }).disposed(by: disposeBag)
-    }
-    
-    private func setupNavigatorBar() {
-        self.title = "Business Locator"
-        
-        guard let _navigationController = self.navigationController else { return }
-        _navigationController.navigationBar.tintColor = .white
-        _navigationController.navigationBar.isHidden = false
-        _navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        _navigationController.setStatusBar(backgroundColor: .primaryColor)
-        _navigationController.navigationBar.backgroundColor = .primaryColor
-        _navigationController.navigationBar.isTranslucent = true
     }
     
     private func setupLocationManager() {

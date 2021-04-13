@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessListViewController" customModule="Yelp_Locator" customModuleProvider="target">
             <connections>
                 <outlet property="businessListTableview" destination="EYl-cg-Vcd" id="kUV-98-rPk"/>
+                <outlet property="emptyImageView" destination="8I5-fI-Ugz" id="nDd-1J-ZMn"/>
                 <outlet property="searchByTextField" destination="oZn-mx-EdR" id="HPg-F2-bf5"/>
                 <outlet property="searchTextField" destination="2hK-1l-NLO" id="UDN-VI-Kkv"/>
                 <outlet property="searchView" destination="XtW-fK-P7Z" id="SZV-f2-cyz"/>
@@ -57,17 +58,26 @@
                     <rect key="frame" x="10" y="129" width="394" height="723"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8I5-fI-Ugz">
+                    <rect key="frame" x="10" y="129" width="394" height="723"/>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <accessibility key="accessibilityConfiguration" identifier="BusinessListViewController"/>
             <constraints>
+                <constraint firstItem="8I5-fI-Ugz" firstAttribute="bottom" secondItem="EYl-cg-Vcd" secondAttribute="bottom" id="3S0-D3-bxV"/>
+                <constraint firstItem="8I5-fI-Ugz" firstAttribute="top" secondItem="EYl-cg-Vcd" secondAttribute="top" id="4HY-K3-Q2m"/>
                 <constraint firstItem="XtW-fK-P7Z" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8Kh-ZY-6YN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="EYl-cg-Vcd" secondAttribute="bottom" constant="10" id="I0T-z3-OtN"/>
+                <constraint firstItem="8I5-fI-Ugz" firstAttribute="centerY" secondItem="EYl-cg-Vcd" secondAttribute="centerY" id="ISC-iR-iym"/>
                 <constraint firstItem="EYl-cg-Vcd" firstAttribute="top" secondItem="XtW-fK-P7Z" secondAttribute="bottom" constant="10" id="a1y-Hw-EAg"/>
+                <constraint firstItem="8I5-fI-Ugz" firstAttribute="centerX" secondItem="EYl-cg-Vcd" secondAttribute="centerX" id="dH7-W9-fxX"/>
                 <constraint firstItem="XtW-fK-P7Z" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fA7-of-2UQ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8I5-fI-Ugz" secondAttribute="trailing" constant="10" id="gV6-QH-zwe"/>
                 <constraint firstItem="EYl-cg-Vcd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="h1V-p6-YDA"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="EYl-cg-Vcd" secondAttribute="trailing" constant="10" id="hbH-c4-FHn"/>
+                <constraint firstItem="8I5-fI-Ugz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="puj-jD-cuU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XtW-fK-P7Z" secondAttribute="trailing" id="x2P-C2-Y6C"/>
             </constraints>
             <point key="canvasLocation" x="-32" y="130"/>

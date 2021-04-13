@@ -35,7 +35,10 @@
 		F06F81FB261F70A300E7A392 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F81F6261F70A200E7A392 /* Business.swift */; };
 		F06F8211261F71A900E7A392 /* BusinessListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F820E261F71A900E7A392 /* BusinessListCell.swift */; };
 		F06F8212261F71A900E7A392 /* BusinessListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06F820F261F71A900E7A392 /* BusinessListCell.xib */; };
-		F06F8213261F71A900E7A392 /* BusinessListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F8210261F71A900E7A392 /* BusinessListCellViewModel.swift */; };
+		F08544D22625361B00D672E5 /* BusinessDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08544D12625361B00D672E5 /* BusinessDetailViewModel.swift */; };
+		F08544DA26253A8600D672E5 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08544D926253A8600D672E5 /* Double+Extensions.swift */; };
+		F08544E52625604E00D672E5 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08544E42625604E00D672E5 /* UIView+Extensions.swift */; };
+		F08544E82625606900D672E5 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08544E72625606900D672E5 /* UIFont+Extensions.swift */; };
 		F0AD168E26204A04004BB442 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD168D26204A04004BB442 /* UIColor+Extensions.swift */; };
 		F0AD16A926205026004BB442 /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD16A826205026004BB442 /* CALayer+Extensions.swift */; };
 		F0AD16AC26205800004BB442 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AD16AB26205800004BB442 /* UINavigationController+Extensions.swift */; };
@@ -79,7 +82,10 @@
 		F06F81F6261F70A200E7A392 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		F06F820E261F71A900E7A392 /* BusinessListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessListCell.swift; sourceTree = "<group>"; };
 		F06F820F261F71A900E7A392 /* BusinessListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessListCell.xib; sourceTree = "<group>"; };
-		F06F8210261F71A900E7A392 /* BusinessListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessListCellViewModel.swift; sourceTree = "<group>"; };
+		F08544D12625361B00D672E5 /* BusinessDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewModel.swift; sourceTree = "<group>"; };
+		F08544D926253A8600D672E5 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		F08544E42625604E00D672E5 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		F08544E72625606900D672E5 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		F0AD168D26204A04004BB442 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		F0AD16A826205026004BB442 /* CALayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		F0AD16AB26205800004BB442 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
@@ -147,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				F0291E092622DED000B27585 /* BusinessDetailView.swift */,
+				F08544D12625361B00D672E5 /* BusinessDetailViewModel.swift */,
 				F0291E0D2622DEE700B27585 /* BusinessDetailView.xib */,
 			);
 			path = "Detail Item";
@@ -269,7 +276,6 @@
 			children = (
 				F06F820E261F71A900E7A392 /* BusinessListCell.swift */,
 				F06F820F261F71A900E7A392 /* BusinessListCell.xib */,
-				F06F8210261F71A900E7A392 /* BusinessListCellViewModel.swift */,
 			);
 			path = "Business List";
 			sourceTree = "<group>";
@@ -295,9 +301,12 @@
 			isa = PBXGroup;
 			children = (
 				F0AD168D26204A04004BB442 /* UIColor+Extensions.swift */,
+				F08544E72625606900D672E5 /* UIFont+Extensions.swift */,
 				F0AD16A826205026004BB442 /* CALayer+Extensions.swift */,
+				F08544E42625604E00D672E5 /* UIView+Extensions.swift */,
 				F0AD16AB26205800004BB442 /* UINavigationController+Extensions.swift */,
 				F0AD16AE26206E9D004BB442 /* UIImage+Extensions.swift */,
+				F08544D926253A8600D672E5 /* Double+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -441,12 +450,16 @@
 				F06F81E5261F703E00E7A392 /* AppDelegate.swift in Sources */,
 				F06F81FB261F70A300E7A392 /* Business.swift in Sources */,
 				F06F81F7261F70A300E7A392 /* BusinessRouter.swift in Sources */,
+				F08544DA26253A8600D672E5 /* Double+Extensions.swift in Sources */,
 				F0FDEBC22624AC32007A588A /* LandingScreenViewController.swift in Sources */,
 				F06F81F8261F70A300E7A392 /* BusinessRequest.swift in Sources */,
 				F0291E1E2622E7A900B27585 /* BusinessDetailsRequestOptions.swift in Sources */,
+				F08544D22625361B00D672E5 /* BusinessDetailViewModel.swift in Sources */,
 				F0291E002622250700B27585 /* BusinessDetailsViewController.swift in Sources */,
 				F0AD168E26204A04004BB442 /* UIColor+Extensions.swift in Sources */,
+				F08544E52625604E00D672E5 /* UIView+Extensions.swift in Sources */,
 				F06F81CD261F6D9700E7A392 /* ViewController.swift in Sources */,
+				F08544E82625606900D672E5 /* UIFont+Extensions.swift in Sources */,
 				F0291E3D26231B7D00B27585 /* BusinessReviewView.swift in Sources */,
 				F06F81FA261F70A300E7A392 /* RequestParameter.swift in Sources */,
 				F0AD16A926205026004BB442 /* CALayer+Extensions.swift in Sources */,
@@ -455,7 +468,6 @@
 				F0FDEBCD2624BCC3007A588A /* LandingScreenViewModel.swift in Sources */,
 				F0AD16AF26206E9D004BB442 /* UIImage+Extensions.swift in Sources */,
 				F0291E052622251800B27585 /* BusinessDetailsViewModel.swift in Sources */,
-				F06F8213261F71A900E7A392 /* BusinessListCellViewModel.swift in Sources */,
 				F0AD16AC26205800004BB442 /* UINavigationController+Extensions.swift in Sources */,
 				F0291E212622E7BB00B27585 /* BusinessReviews.swift in Sources */,
 				F0291E1B2622E79400B27585 /* BusinessDetails.swift in Sources */,
