@@ -57,15 +57,34 @@ class BusinessListViewModel {
             switch filterBy {
             case .none:
                 // Added alphabetical sorting for default list
-                _self.businessList.accept(data?.businesses?.sorted(by: { $0.name ?? "" < $1.name ?? "" }) ?? [])
+                _self.businessListContainer.accept(data?.businesses?.sorted(by: { $0.name ?? "" < $1.name ?? "" }) ?? [])
             case .rating:
-                // Had to sort manually when filtering by Rating since API sometimes returns inconsistent lists
-                _self.businessList.accept(data?.businesses?.sorted(by: { $0.rating ?? 0.0 > $1.rating ?? 0.0 }) ?? [])
+                // Need to sort manually when filtering by Rating since API sometimes returns inconsistent order
+                _self.businessListContainer.accept(data?.businesses?.sorted(by: { $0.rating ?? 0.0 > $1.rating ?? 0.0 }) ?? [])
             default:
-                _self.businessList.accept(data?.businesses ?? [])
+                _self.businessListContainer.accept(data?.businesses ?? [])
             }
-            
+ 
+            _self.searchBusinesses(searchText: _self.searchTextValue.value)
             _self.initialLoadDone = true
+        }
+    }
+    
+    private func searchBusinesses(searchText: String) {
+        var filteredList: [Business] = []
+        
+        switch self.searchCategory {
+        case .name:
+            if searchText != "" {
+                /// Need to manually filter by Name search since API response also filters by Category on "term" search
+                /// term - string - Optional. Search term, for example "food" or "restaurants". The term may also be business names, such as "Starbucks". If term is not included the endpoint will default to searching across businesses from a small number of popular categories.
+                filteredList = self.businessListContainer.value.filter({($0.name?.lowercased().contains(searchText.lowercased()) ?? false)})
+                self.businessList.accept(filteredList)
+            } else {
+                self.businessList.accept(self.businessListContainer.value)
+            }
+        default:
+            self.businessList.accept(self.businessListContainer.value)
         }
     }
     
